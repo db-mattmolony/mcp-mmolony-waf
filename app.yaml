@@ -1,0 +1,23 @@
+command: ["uv", "run", "custom-server"]
+
+env:
+  - name: "DATABRICKS_WAREHOUSE_ID"
+    valueFrom: "sql-warehouse"
+  # User token environment variables (these may be provided by Databricks Apps)
+  - name: "DATABRICKS_USER_TOKEN"
+    value: "${secrets.user.token}"
+  - name: "USER_ACCESS_TOKEN"
+    value: "${secrets.user.token}"
+
+# Enable user identity passthrough for the app
+permissions:
+  - level: "CAN_USE"
+    group_name: "users"
+  - level: "CAN_MANAGE"
+    group_name: "admins"
+
+# OAuth configuration for user token access (if needed)
+oauth:
+  scopes:
+    - "sql"
+    - "unity-catalog"
