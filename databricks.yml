@@ -1,5 +1,5 @@
 bundle:
-  name: custom-mcp-server
+  name: mcp-mmolony-waf-bundles
 
 sync:
   include:
@@ -12,17 +12,32 @@ artifacts:
     build: uv build --wheel
 
 resources:
+  # SQL Warehouse for the MCP Server to execute cost optimization queries
+  sql_warehouses:
+    waf-mcp-warehouse:
+      name: "waf-mcp-warehouse"
+      display_name: "WAF MCP Server Warehouse"
+      warehouse_type: "PRO"
+      cluster_size: "Small"
+      min_num_clusters: 1
+      max_num_clusters: 1
+      auto_stop_mins: 60
+      enable_photon: true
+      enable_serverless_compute: false
+      spot_instance_policy: "COST_OPTIMIZED"
+      tags:
+        environment: "dev"
+        project: "waf-mcp-server"
+        cost_center: "analytics"
+
+  # Databricks App definition
   apps:
-    custom-mcp-server:
-      name: "mcp-custom-server-bundles"
-      description: "Custom MCP Server on Databricks Apps"
+    waf-mcp-server:
+      name: "mcp-mmolony-waf"
+      description: "MCP Server on Databricks Apps for the Well Architected Framework"
       source_code_path: ./.build
 
 targets:
   dev:
     mode: development
     default: true
-
-auth:
-  scopes:
-    - sql

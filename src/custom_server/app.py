@@ -3,13 +3,14 @@ from mcp.server.fastmcp import FastMCP
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from databricks.sdk.core import Config
-from databricks import sql
 from .prompts import load_prompts
+from .services.sql_service import get_sql_service, QueryFormatter
+from .services.query_repository import get_query_repository
 import os
 from dotenv import load_dotenv
 from fastapi import Header
 from typing import Optional
-
+from pydantic import Field
 
 
 # Load environment variables from .env file
@@ -18,6 +19,10 @@ load_dotenv()
 cfg = Config()
 
 user_token = Header(None, alias="X-Forwarded-Access-Token")
+
+# Initialize services
+sql_service = get_sql_service()
+query_repo = get_query_repository()
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -35,111 +40,170 @@ def add(a: int, b: int) -> int:
 
 
 @mcp.tool()
-def create_catalog(catalog_name: str) -> str:
+def COST_OPTIMISATION_C0_01_01_TABLE_TYPES() -> str:
     """
-    Create a new catalog in Databricks using a SQL warehouse
+    CO-01-01 | Use Performance-Optimised Data Formats - Analyzes table formats in workspace to identify cost optimization opportunities
     """
-    try:
-        query = f"CREATE CATALOG IF NOT EXISTS {catalog_name};"
-        with sql.connect(
-            server_hostname=cfg.host,
-            http_path=f"/sql/1.0/warehouses/{os.getenv('DATABRICKS_WAREHOUSE_ID')}",
-            # credentials_provider=lambda: cfg.authenticate,
-            access_token=user_token
-        ) as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(query)
-                return f"Catalog {catalog_name} created successfully"
-    except Exception as e:
-        return f"Error querying Databricks Warehouse: {e}"
-    
-@mcp.tool()
-def create_schema(catalog_name: str, schema_name: str) -> str:
-    """
-    Create a new schema in Databricks catalog using a SQL warehouse
-    """
-    try:
-        query = f"CREATE SCHEMA IF NOT EXISTS {catalog_name}.{schema_name};"
-        with sql.connect(
-            server_hostname=cfg.host,
-            http_path=f"/sql/1.0/warehouses/{os.getenv('DATABRICKS_WAREHOUSE_ID')}",
-            # credentials_provider=lambda: cfg.authenticate
-            access_token=user_token
-        ) as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(query)
-                return f"Schema {schema_name} created successfully"
-    except Exception as e:
-        return f"Error querying Databricks Warehouse: {e}"
+    query = query_repo.get_query("CO-01-01-table-formats")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_table_formats)
     
     
 @mcp.tool()
-def create_metadata_tables(catalog_name: str, schema_name: str) -> str:
+def COST_OPTIMISATION_C0_01_01_MANAGED_TABLES() -> str:
     """
-    Create the three synthetic data metadata tables in the specified catalog and schema.
-    Creates _synthetic_schema_metadata, _synthetic_table_metadata, and _string_categories tables.
+    CO-01-01 | Use Performance-Optimised Data Formats - Analyzes table types in workspace to identify cost optimization opportunities from managed tables, showing the percentage distribution of table types across your data estate
     """
-    try:
-        # SQL queries to create the three metadata tables
-        queries = [
-            f"""
-            CREATE TABLE IF NOT EXISTS {catalog_name}.{schema_name}._synthetic_schema_metadata (
-                table_name STRING COMMENT 'Name of the table in the schema',
-                description STRING COMMENT 'Detailed description of the table purpose and contents'
-            ) USING DELTA
-            COMMENT 'Schema-level metadata describing tables and their purposes for synthetic data generation'
-            """,
-            f"""
-            CREATE TABLE IF NOT EXISTS {catalog_name}.{schema_name}._synthetic_table_metadata (
-                table_name STRING COMMENT 'Name of the table this metadata describes',
-                column_name STRING COMMENT 'Name of the column in the table',
-                data_type STRING COMMENT 'Data type of the column (string, integer, bigint, etc.)',
-                description STRING COMMENT 'Detailed description of what this column contains'
-            ) USING DELTA
-            COMMENT 'Table and column-level metadata describing the structure and meaning of each column for synthetic data generation'
-            """,
-            f"""
-            CREATE TABLE IF NOT EXISTS {catalog_name}.{schema_name}._string_categories (
-                column_name STRING COMMENT 'Name of the string/categorical column',
-                table_name STRING COMMENT 'Name of the table containing this column',
-                data_type STRING COMMENT 'Data type of the column (typically string for categorical data)',
-                description STRING COMMENT 'Description of what this categorical column represents',
-                cardinality ARRAY<STRING> COMMENT 'Array of all possible categorical values for this column',
-                no_of_levels BIGINT COMMENT 'Total number of distinct categorical values (cardinality count)'
-            ) USING DELTA
-            COMMENT 'Categorical data metadata storing all possible values for string columns to ensure consistent synthetic data generation'
-            """
-        ]
-        
-        results = []
-        with sql.connect(
-            server_hostname=cfg.host,
-            http_path=f"/sql/1.0/warehouses/{os.getenv('DATABRICKS_WAREHOUSE_ID')}",
-            # credentials_provider=lambda: cfg.authenticate
-            access_token=user_token
-        ) as connection:
-            with connection.cursor() as cursor:
-                for i, query in enumerate(queries):
-                    cursor.execute(query)
-                    table_names = ["_synthetic_schema_metadata", "_synthetic_table_metadata", "_string_categories"]
-                    results.append(f"✓ Created table {catalog_name}.{schema_name}.{table_names[i]}")
-                
-        return f"Successfully created metadata tables in {catalog_name}.{schema_name}:\n" + "\n".join(results)
-        
-    except Exception as e:
-        return f"Error creating metadata tables: {e}"
+    query = query_repo.get_query("CO-01-01-managed-tables")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_table_types_distribution)   
+    
+@mcp.tool()
+def COST_OPTIMISATION_C0_01_02_JOBS_ON_ALL_PURPOSE_CLUSTERS() -> str:
+    """
+    CO-01-02 | Use Job Clusters for Non-Interactive Workloads - Analyse jobs running on all purpose clusters to identify cost optimization opportunities by switching to dedicated clusters compute
+    """
+    query = query_repo.get_query("CO-01-02")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_jobs_on_all_purpose_clusters) 
     
 
+# @mcp.tool()
+# def COST_OPTIMISATION_CO_01_03_SQL_VS_ALLPURPOSE() -> str:
+#     """
+#     CO-01-03 | Use SQL Compute for SQL Workloads - Compares SQL vs All Purpose compute usage to identify cost optimization opportunities
+#     """
+#     query = query_repo.get_query("CO-01-03")
+#     return sql_service.execute_query_with_formatting(query, QueryFormatter.format_sql_vs_all_purpose)
 
-# Add a dynamic greeting resource
-@mcp.resource("greeting://{name}")
-def get_greeting(name: str) -> str:
-    """Get a personalized greeting"""
-    return f"Hello, {name}!"
+
+# @mcp.tool()
+# def COST_OPTIMISATION_CO_01_03_SQL_ON_ALLPURPOSE() -> str:
+#     """
+#     CO-01-03 | Use SQL Compute for SQL Workloads - Shows SQL workloads running on All Purpose clusters (Coming Soon)
+#     """
+#     return "Coming Soon... - SQL workloads running on All Purpose clusters analysis will be available in a future update"
+
+
+@mcp.tool()
+def COST_OPTIMISATION_CO_01_04_LATEST_DBR() -> str:
+    """
+    CO-01-04 | Use Latest Databricks Runtime - Analyzes DBR versions across clusters to identify upgrade opportunities
+    """
+    query = query_repo.get_query("CO-01-04")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_dbr_versions)
+
+
+# @mcp.tool()
+# def COST_OPTIMISATION_CO_01_05_GPU() -> str:
+#     """
+#     CO-01-05 | Optimize GPU Usage - Analyzes GPU usage patterns (Coming Soon)
+#     """
+#     return "Coming Soon... - GPU usage optimization analysis will be available in a future update"
+
+
+@mcp.tool()
+def COST_OPTIMISATION_CO_01_06_SERVERLESS() -> str:
+    """
+    CO-01-06 | Use Serverless Compute - Shows percentage of serverless compute usage vs total compute
+    """
+    query = query_repo.get_query("CO-01-06-serverless")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_serverless_percentage)
+
+
+@mcp.tool()
+def COST_OPTIMISATION_CO_01_06_SERVERLESS_SQL() -> str:
+    """
+    CO-01-06 | Use Serverless Compute - Compares SQL Serverless vs Classic SQL compute costs
+    """
+    query = query_repo.get_query("CO-01-06-sql")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_sql_compute_costs)
+
+
+# @mcp.tool()
+# def COST_OPTIMISATION_CO_01_07_INSTANCE_TYPE() -> str:
+#     """
+#     CO-01-07 | Optimize Instance Types - Analyzes instance type usage patterns (Coming Soon)
+#     """
+#     return "Coming Soon... - Instance type optimization analysis will be available in a future update"
+
+
+# @mcp.tool()
+# def COST_OPTIMISATION_CO_01_08_CLUSTER_SIZE() -> str:
+#     """
+#     CO-01-08 | Right-size Clusters - Analyzes cluster sizing patterns (Coming Soon)
+#     """
+#     return "Coming Soon... - Cluster sizing analysis will be available in a future update"
+
+
+@mcp.tool()
+def COST_OPTIMISATION_CO_01_08_CLUSTER_UTILISATION() -> str:
+    """
+    CO-01-08 | Right-size Clusters - Analyzes cluster utilization patterns to identify optimization opportunities
+    """
+    query = query_repo.get_query("CO-01-08")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_cluster_utilization)
+
+
+# @mcp.tool()
+# def COST_OPTIMISATION_CO_01_09_PHOTON() -> str:
+#     """
+#     CO-01-09 | Use Photon for SQL Workloads - Analyzes Photon usage patterns (Coming Soon)
+#     """
+#     return "Coming Soon... - Photon usage analysis will be available in a future update"
+
+
+@mcp.tool()
+def COST_OPTIMISATION_CO_02_01_AUTO_SCALING() -> str:
+    """
+    CO-02-01 | Enable Autoscaling - Shows percentage of clusters with autoscaling enabled
+    """
+    query = query_repo.get_query("CO-02-01")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_autoscaling_percentage)
+
+
+@mcp.tool()
+def COST_OPTIMISATION_CO_02_02_AUTO_TERMINATION() -> str:
+    """
+    CO-02-02 | Configure Auto-termination - Analyzes auto-termination settings across clusters
+    """
+    query = query_repo.get_query("CO-02-02")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_auto_termination_analysis)
+
+
+# @mcp.tool()
+# def COST_OPTIMISATION_CO_02_03_CLUSTER_POLICIES() -> str:
+#     """
+#     CO-02-03 | Use Cluster Policies - Analyzes cluster policy usage patterns (Coming Soon)
+#     """
+#     return "Coming Soon... - Cluster policy usage analysis will be available in a future update"
+
+
+@mcp.tool()
+def COST_OPTIMISATION_CO_03_01_BILLING_TABLES() -> str:
+    """
+    CO-03-01 | Monitor Billing Tables Usage - Shows how frequently billing tables are accessed
+    """
+    query = query_repo.get_query("CO-03-01")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_billing_table_access)
+
+
+@mcp.tool()
+def COST_OPTIMISATION_CO_03_02_TAGGING_COMPUTE() -> str:
+    """
+    CO-03-02 | Use Tags for Cost Allocation - Analyzes tagging patterns on compute resources
+    """
+    query = query_repo.get_query("CO-03-02-tagging")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_cluster_tagging_distribution)
+
+
+@mcp.tool()
+def COST_OPTIMISATION_CO_03_02_POPULAR_TAGS() -> str:
+    """
+    CO-03-02 | Use Tags for Cost Allocation - Shows most popular tags used across clusters
+    """
+    query = query_repo.get_query("CO-03-02-popular")
+    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_popular_tags)
 
 
 mcp_app = mcp.streamable_http_app()
-
 
 app = FastAPI(
     lifespan=lambda _: mcp.session_manager.run(),
@@ -149,10 +213,6 @@ app = FastAPI(
 @app.get("/", include_in_schema=False)
 async def serve_index():
     return FileResponse(STATIC_DIR / "index.html")
-
-# @app.get("/example")
-# async def example(user_token: Optional[str] = Header(None, alias="X-Forwarded-Access-Token")):
-#     return {"user_token": user_token}
 
 
 app.mount("/", mcp_app)
