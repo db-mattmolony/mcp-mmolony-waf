@@ -1,0 +1,33 @@
+,,,
+principle_id,pillar_id,pillar_name,principle_description
+DG-01,DG,01 - Data And AI Governance,Unify data and AI management
+DG-02,DG,01 - Data And AI Governance,Unify data and AI security
+DG-03,DG,01 - Data And AI Governance,Establish data quality standards
+IU-01,IU,02 - Interoperability and Usability,Define standards for integration
+IU-02,IU,02 - Interoperability and Usability,Utilize open interfaces and data formats
+IU-03,IU,02 - Interoperability and Usability,Simplify new use case implementation
+IU-04,IU,02 - Interoperability and Usability,Ensure data consistency and usability
+OE-01,OE,03 - Operational Excellence,Optimize build and release processes
+OE-02,OE,03 - Operational Excellence,Automate deployments and workloads
+OE-03,OE,03 - Operational Excellence,"Set up Monitoring, Alerting and Logging"
+OE-04,OE,03 - Operational Excellence,Manage capacity and quotas
+SCP-01,SC,"04 - Security, Compliance and Privacy",Manage identity and access using least privilege
+SCP-02,SC,"04 - Security, Compliance and Privacy",Protect data in transit and at rest
+SCP-03,SC,"04 - Security, Compliance and Privacy",Secure your network and identify and protect endpoints
+SCP-04,SC,"04 - Security, Compliance and Privacy",Review the Shared Responsibility Model
+SCP-05,SC,"04 - Security, Compliance and Privacy",Meet compliance and data privacy requirements
+SCP-06,SC,"04 - Security, Compliance and Privacy",Monitor system security
+SCP-07,SC,"04 - Security, Compliance and Privacy",Generic controls
+R-01,R,05 - Reliability,Design for failure
+R-02,R,05 - Reliability,Manage data quality
+R-03,R,05 - Reliability,Design for autoscaling
+R-04,R,05 - Reliability,Test recovery procedures
+R-05,R,05 - Reliability,Monitor platform events
+PE-01,PE,06 - Performance efficiency,Utilize serverless capabilities
+PE-02,PE,06 - Performance efficiency,Design workloads for performance
+PE-03,PE,06 - Performance efficiency,Run performance testing
+PE-04,PE,06 - Performance efficiency,Monitor performance
+CO-01,CO,07 - Cost Optimization,Choose optimal resources
+CO-02,CO,07 - Cost Optimization,Dynamically allocate resources
+CO-03,CO,07 - Cost Optimization,Monitor and control cost
+CO-04,CO,07 - Cost Optimization,Design cost-effective workloads

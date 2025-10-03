@@ -6,6 +6,7 @@ from databricks.sdk.core import Config
 from .prompts import load_prompts
 from .services.sql_service import get_sql_service, QueryFormatter
 from .services.query_repository import get_query_repository
+from .services.waf_hierarchy_service import get_waf_hierarchy_service
 import os
 from dotenv import load_dotenv
 from fastapi import Header
@@ -23,6 +24,7 @@ user_token = Header(None, alias="X-Forwarded-Access-Token")
 # Initialize services
 sql_service = get_sql_service()
 query_repo = get_query_repository()
+waf_service = get_waf_hierarchy_service()
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -32,11 +34,193 @@ mcp = FastMCP("Custom MCP Server on Databricks Apps for creating")
 # Load prompts and tools
 load_prompts(mcp)
 
-# Add an addition tool
+# WAF (Well-Architected Framework) Tools
 @mcp.tool()
-def add(a: int, b: int) -> int:
-    """Add two numbers"""
-    return a + b
+def get_waf_pillar(pillar_id: str) -> str:
+    """
+    Get information about a specific WAF pillar by ID.
+    
+    Args:
+        pillar_id: The WAF pillar ID (e.g., 'DG', 'CO', 'RE', 'SE', 'PE', 'SU', 'IU', 'OE')
+    
+    Returns:
+        Pillar information with associated principles and measures count.
+    """
+    pillar = waf_service.get_pillar(pillar_id)
+    
+    if not pillar:
+        available_pillars = [p.pillar_id for p in waf_service.get_all_pillars()]
+        return f"WAF pillar '{pillar_id}' not found. Available pillar IDs: {', '.join(available_pillars)}"
+    
+    principles = waf_service.get_principles_by_pillar(pillar_id)
+    measures = waf_service.get_measures_by_pillar(pillar_id)
+    
+    result = f"**WAF Pillar: {pillar.pillar_id}**\n"
+    result += f"**Name:** {pillar.pillar_name}\n\n"
+    result += f"**Principles:** {len(principles)}\n"
+    result += f"**Measures:** {len(measures)}\n\n"
+    
+    if principles:
+        result += "**Principles in this pillar:**\n"
+        for principle in principles:
+            principle_measures = waf_service.get_measures_by_principle(principle.principle_id)
+            result += f"- **{principle.principle_id}**: {principle.principle_description} ({len(principle_measures)} measures)\n"
+    
+    result += f"\nUse `get_waf_principle(principle_id)` to explore specific principles."
+    
+    return result
+
+
+@mcp.tool()
+def get_waf_principle(principle_id: str) -> str:
+    """
+    Get information about a specific WAF principle by ID.
+    
+    Args:
+        principle_id: The WAF principle ID (e.g., 'DG-01', 'CO-01', 'RE-01')
+    
+    Returns:
+        Principle information with associated measures.
+    """
+    principle = waf_service.get_principle(principle_id)
+    
+    if not principle:
+        return f"WAF principle '{principle_id}' not found. Use `list_waf_principles()` to see all available principles."
+    
+    measures = waf_service.get_measures_by_principle(principle_id)
+    
+    result = f"**WAF Principle: {principle.principle_id}**\n"
+    result += f"**Pillar:** {principle.pillar_name}\n"
+    result += f"**Description:** {principle.principle_description}\n\n"
+    result += f"**Measures:** {len(measures)}\n\n"
+    
+    if measures:
+        result += "**Measures in this principle:**\n"
+        for measure in measures:
+            result += f"- **{measure.measure_id}**: {measure.best_practice}\n"
+            if measure.databricks_capabilities:
+                result += f"  *Capabilities: {measure.databricks_capabilities}*\n"
+    
+    result += f"\nUse `get_waf_measure(measure_id)` to get detailed information about any measure."
+    
+    return result
+
+
+@mcp.tool()
+def get_waf_measure(measure_id: str) -> str:
+    """
+    Get detailed information about a specific WAF measure by ID.
+    
+    Args:
+        measure_id: The WAF measure ID (e.g., 'DG-01-01', 'CO-01-01')
+    
+    Returns:
+        Complete measure details including best practices, Databricks capabilities, and implementation guidance.
+    """
+    measure = waf_service.get_measure(measure_id)
+    
+    if not measure:
+        return f"WAF measure '{measure_id}' not found. Use `search_waf_measures(search_term)` to find relevant measures."
+    
+    # Get the principle for context
+    principle = waf_service.get_principle(measure.principle_id)
+    principle_desc = principle.principle_description if principle else "Unknown"
+    
+    result = f"**WAF Measure: {measure.measure_id}**\n\n"
+    result += f"**Pillar:** {measure.pillar_id}\n"
+    result += f"**Principle:** {measure.principle_id} - {principle_desc}\n"
+    result += f"**Best Practice:** {measure.best_practice}\n\n"
+    
+    if measure.databricks_capabilities:
+        result += f"**Databricks Capabilities:** {measure.databricks_capabilities}\n\n"
+    
+    result += f"**Implementation Details:**\n{measure.details}"
+    
+    return result
+
+
+@mcp.tool()
+def list_waf_pillars() -> str:
+    """
+    List all WAF pillars with their principles and measures count.
+    
+    Returns:
+        A comprehensive overview of all WAF pillars.
+    """
+    pillars = waf_service.get_all_pillars()
+    stats = waf_service.get_stats()
+    
+    result = "**Databricks Well-Architected Framework Pillars:**\n\n"
+    
+    for pillar in pillars:
+        principles = waf_service.get_principles_by_pillar(pillar.pillar_id)
+        measures = waf_service.get_measures_by_pillar(pillar.pillar_id)
+        
+        result += f"**{pillar.pillar_id}** - {pillar.pillar_name}\n"
+        result += f"  - {len(principles)} principles, {len(measures)} measures\n\n"
+    
+    result += f"**Total:** {stats['total_pillars']} pillars, {stats['total_principles']} principles, {stats['total_measures']} measures\n\n"
+    result += "Use `get_waf_pillar(pillar_id)` to explore any pillar in detail."
+    
+    return result
+
+
+@mcp.tool()
+def list_waf_principles() -> str:
+    """
+    List all WAF principles organized by pillar.
+    
+    Returns:
+        A comprehensive list of all WAF principles grouped by pillar.
+    """
+    pillars = waf_service.get_all_pillars()
+    
+    result = "**WAF Principles by Pillar:**\n\n"
+    
+    for pillar in pillars:
+        principles = waf_service.get_principles_by_pillar(pillar.pillar_id)
+        
+        result += f"**{pillar.pillar_name}:**\n"
+        for principle in principles:
+            measures = waf_service.get_measures_by_principle(principle.principle_id)
+            result += f"  - **{principle.principle_id}**: {principle.principle_description} ({len(measures)} measures)\n"
+        result += "\n"
+    
+    result += "Use `get_waf_principle(principle_id)` to explore any principle in detail."
+    
+    return result
+
+
+@mcp.tool()
+def search_waf_measures(search_term: str) -> str:
+    """
+    Search for WAF measures containing the specified term.
+    
+    Args:
+        search_term: The term to search for (searches in measure ID, best practice, capabilities, and details)
+    
+    Returns:
+        A list of matching WAF measures with their key information.
+    """
+    matches = waf_service.search_measures(search_term)
+    
+    if not matches:
+        return f"No WAF measures found containing '{search_term}'. Use `list_waf_pillars()` to explore available content."
+    
+    result = f"**WAF Measures matching '{search_term}' ({len(matches)} found):**\n\n"
+    
+    for measure in matches[:15]:  # Limit to first 15 results
+        result += f"**{measure.measure_id}** - {measure.best_practice}\n"
+        if measure.databricks_capabilities:
+            result += f"  *Capabilities: {measure.databricks_capabilities}*\n"
+        result += "\n"
+    
+    if len(matches) > 15:
+        result += f"... and {len(matches) - 15} more results.\n\n"
+    
+    result += "Use `get_waf_measure(measure_id)` for complete details on any measure."
+    
+    return result
 
 
 @mcp.tool()

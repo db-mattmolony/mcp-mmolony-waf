@@ -51,6 +51,14 @@ class AppsBuildHook(BuildHookInterface):
         else:
             self.app.display_info(f"{app_file} does not exist, skipping copy")
 
+        # Copy the resources folder for WAF measures
+        resources_dir = Path("resources")
+        if resources_dir.exists():
+            self.app.display_info(f"Copying {resources_dir} to {build_dir}")
+            shutil.copytree(resources_dir, build_dir / "resources")
+        else:
+            self.app.display_info(f"{resources_dir} does not exist, skipping copy")
+
         self.app.display_info(
             f"Apps-compatible build written to {build_dir.absolute()}"
         )
