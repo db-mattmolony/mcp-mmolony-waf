@@ -1,0 +1,293 @@
+pillar_id,principle_id,measure_id,alaysis_id,measure_sql_code,measure_sql_description
+DG,DG-01,DG-01-01,DG-01-01,,
+DG,DG-01,DG-01-02,DG-01-02,,
+DG,DG-01,DG-01-03,DG-01-03,,
+DG,DG-01,DG-01-04,DG-01-04,,
+DG,DG-01,DG-01-05,DG-01-05,,
+DG,DG-01,DG-01-06,DG-01-06,,
+DG,DG-02,DG-02-01,DG-02-01,,
+DG,DG-02,DG-02-02,DG-02-02,,
+DG,DG-02,DG-02-03,DG-02-03,,
+DG,DG-03,DG-03-01,DG-03-01,,
+DG,DG-03,DG-03-02,DG-03-02,,
+DG,DG-03,DG-03-03,DG-03-03,,
+IU,IU-01,IU-01-01,IU-01-01,,
+IU,IU-01,IU-01-02,IU-01-02,,
+IU,IU-01,IU-01-03,IU-01-03,,
+IU,IU-01,IU-01-04,IU-01-04,,
+IU,IU-02,IU-02-01,IU-02-01,,
+IU,IU-02,IU-02-02,IU-02-02,,
+IU,IU-02,IU-02-03,IU-02-03,,
+IU,IU-03,IU-03-01,IU-03-01,,
+IU,IU-03,IU-03-02,IU-03-02,,
+IU,IU-03,IU-03-03,IU-03-03,,
+IU,IU-03,IU-03-04,IU-03-04,,
+IU,IU-04,IU-04-01,IU-04-01,,
+IU,IU-04,IU-04-02,IU-04-02,,
+IU,IU-04,IU-04-03,IU-04-03,,
+OE,OE-01,OE-01-01,OE-01-01,,
+OE,OE-01,OE-01-02,OE-01-02,,
+OE,OE-01,OE-01-03,OE-01-03,,
+OE,OE-01,OE-01-04,OE-01-04,,
+OE,OE-01,OE-01-05,OE-01-05,,
+OE,OE-01,OE-01-06,OE-01-06,,
+OE,OE-01,OE-01-07,OE-01-07,,
+OE,OE-01,OE-01-08,OE-01-08,,
+OE,OE-01,OE-01-09,OE-01-09,,
+OE,OE-02,OE-02-01,OE-02-01,,
+OE,OE-02,OE-02-02,OE-02-02,,
+OE,OE-02,OE-02-03,OE-02-03,,
+OE,OE-02,OE-02-04,OE-02-04,,
+OE,OE-02,OE-02-05,OE-02-05,,
+OE,OE-02,OE-02-06,OE-02-06,,
+OE,OE-02,OE-02-07,OE-02-07,,
+OE,OE-02,OE-02-08,OE-02-08,,
+OE,OE-02,OE-02-09,OE-02-09,,
+OE,OE-02,OE-02-10,OE-02-10,,
+OE,OE-02,OE-02-11,OE-02-11,,
+OE,OE-03,OE-03-01,OE-03-01,,
+OE,OE-03,OE-03-02,OE-03-02,,
+OE,OE-03,OE-03-03,OE-03-03,,
+OE,OE-03,OE-03-04,OE-03-04,,
+OE,OE-04,OE-04-01,OE-04-01,,
+OE,OE-04,OE-04-02,OE-04-02,,
+SC,SCP-0,SCP-01-01,SCP-01-01,,
+SC,SCP-0,SCP-01-02,SCP-01-02,,
+SC,SCP-0,SCP-01-03,SCP-01-03,,
+SC,SCP-0,SCP-01-04,SCP-01-04,,
+SC,SCP-0,SCP-01-05,SCP-01-05,,
+SC,SCP-0,SCP-01-06,SCP-01-06,,
+SC,SCP-0,SCP-01-07,SCP-01-07,,
+SC,SCP-0,SCP-01-08,SCP-01-08,,
+SC,SCP-0,SCP-01-09,SCP-01-09,,
+SC,SCP-0,SCP-01-10,SCP-01-10,,
+SC,SCP-0,SCP-01-11,SCP-01-11,,
+SC,SCP-0,SCP-01-12,SCP-01-12,,
+SC,SCP-0,SCP-01-13,SCP-01-13,,
+SC,SCP-0,SCP-02-01,SCP-02-01,,
+SC,SCP-0,SCP-02-02,SCP-02-02,,
+SC,SCP-0,SCP-02-03,SCP-02-03,,
+SC,SCP-0,SCP-02-04,SCP-02-04,,
+SC,SCP-0,SCP-02-05,SCP-02-05,,
+SC,SCP-0,SCP-02-06,SCP-02-06,,
+SC,SCP-0,SCP-02-07,SCP-02-07,,
+SC,SCP-0,SCP-03-01,SCP-03-01,,
+SC,SCP-0,SCP-03-02,SCP-03-02,,
+SC,SCP-0,SCP-03-03,SCP-03-03,,
+SC,SCP-0,SCP-03-04,SCP-03-04,,
+SC,SCP-0,SCP-03-05,SCP-03-05,,
+SC,SCP-0,SCP-03-06,SCP-03-06,,
+SC,SCP-0,SCP-04-01,SCP-04-01,,
+SC,SCP-0,SCP-05-01,SCP-05-01,,
+SC,SCP-0,SCP-06-01,SCP-06-01,,
+SC,SCP-0,SCP-06-02,SCP-06-02,,
+SC,SCP-0,SCP-06-03,SCP-06-03,,
+SC,SCP-0,SCP-06-04,SCP-06-04,,
+SC,SCP-0,SCP-06-05,SCP-06-05,,
+SC,SCP-0,SCP-07-01,SCP-07-01,,
+SC,SCP-0,SCP-07-02,SCP-07-02,,
+SC,SCP-0,SCP-07-03,SCP-07-03,,
+SC,SCP-0,SCP-07-04,SCP-07-04,,
+SC,SCP-0,SCP-07-05,SCP-07-05,,
+R,R-01,R-01-01,R-01-01,,
+R,R-01,R-01-02,R-01-02,,
+R,R-01,R-01-03,R-01-03,,
+R,R-01,R-01-04,R-01-04,,
+R,R-01,R-01-05,R-01-05,,
+R,R-01,R-01-06,R-01-06,,
+R,R-02,R-02-01,R-02-01,,
+R,R-02,R-02-02,R-02-02,,
+R,R-02,R-02-03,R-02-03,,
+R,R-02,R-02-04,R-02-04,,
+R,R-02,R-02-05,R-02-05,,
+R,R-03,R-03-01,R-03-01,,
+R,R-03,R-03-02,R-03-02,,
+R,R-04,R-04-01,R-04-01,,
+R,R-04,R-04-02,R-04-02,,
+R,R-04,R-04-03,R-04-03,,
+R,R-04,R-04-04,R-04-04,,
+R,R-05,R-05-01,R-05-01,,
+R,R-05,R-05-02,R-05-02,,
+PE,PE-01,PE-01-01,PE-01-01,,
+PE,PE-01,PE-01-02,PE-01-02,,
+PE,PE-02,PE-02-01,PE-02-01,,
+PE,PE-02,PE-02-02,PE-02-02,,
+PE,PE-02,PE-02-03,PE-02-03,,
+PE,PE-02,PE-02-04,PE-02-04,,
+PE,PE-02,PE-02-05,PE-02-05,,
+PE,PE-02,PE-02-06,PE-02-06,,
+PE,PE-02,PE-02-07,PE-02-07,,
+PE,PE-02,PE-02-08,PE-02-08,,
+PE,PE-02,PE-02-09,PE-02-09,,
+PE,PE-02,PE-02-10,PE-02-10,,
+PE,PE-02,PE-02-11,PE-02-11,,
+PE,PE-02,PE-02-12,PE-02-12,,
+PE,PE-02,PE-02-14,PE-02-14,,
+PE,PE-02,PE-02-15,PE-02-15,,
+PE,PE-02,PE-02-16,PE-02-16,,
+PE,PE-03,PE-03-01,PE-03-01,,
+PE,PE-03,PE-03-02,PE-03-02,,
+PE,PE-03,PE-03-03,PE-03-03,,
+PE,PE-04,PE-04-01,PE-04-01,,
+PE,PE-04,PE-04-02,PE-04-02,,
+PE,PE-04,PE-04-03,PE-04-03,,
+CO,CO-01,CO-01-01,CO-01-01A,"SELECT 
+    data_source_format AS tables_format,
+    count(data_source_format) AS no_of_tables
+FROM system.information_schema.tables 
+GROUP BY ALL
+ORDER BY no_of_tables desc;","This query displays the number of tables registered in the current workspace’s Unity Catalog, grouped by table format (for example, Delta, Iceberg, or Parquet)."
+CO,CO-01,CO-01-01,CO-01-01B,"SELECT 
+    table_type,
+    round(count(table_type)/(select count(*) from system.information_schema.tables) * 100) as percent_of_tables
+FROM system.information_schema.tables
+group by ALL
+HAVING percent_of_tables > 0
+ORDER BY percent_of_tables desc","This query shows the percentage breakdown of table types in the current Databricks workspace that are classified as managed tables (for example, Views, Managed, or External)."
+CO,CO-01,CO-01-02,CO-01-02,"with clusters AS (
+    SELECT
+        *,
+        ROW_NUMBER() OVER(PARTITION BY workspace_id, cluster_id ORDER BY change_time DESC) as rn
+    FROM system.compute.clusters
+    WHERE cluster_source=""UI"" OR cluster_source=""API""
+    QUALIFY rn=1
+),
+    job_tasks_exploded AS (
+    SELECT
+        workspace_id,
+        job_id,
+        EXPLODE(compute_ids) as cluster_id
+    FROM system.lakeflow.job_task_run_timeline
+    WHERE period_start_time >= CURRENT_DATE() - INTERVAL 30 DAY
+    GROUP BY ALL
+),
+    all_purpose_cluster_jobs AS (
+    SELECT
+        t1.*,
+        t2.cluster_name,
+        t2.owned_by
+    FROM job_tasks_exploded t1
+        INNER JOIN clusters t2 USING (workspace_id, cluster_id)
+)
+SELECT * FROM all_purpose_cluster_jobs LIMIT 10;",This query lists the top ten jobs configured to run on All-Purpose clusters instead of Job clusters within the current Databricks workspace.
+CO,CO-01,CO-01-03,CO-01-03,"SELECT billing_origin_product, sum(usage_quantity) as dbu 
+FROM system.billing.usage 
+WHERE billing_origin_product in ('SQL','ALL_PURPOSE') 
+    AND usage_date >= current_date() - interval 30 days 
+GROUP BY billing_origin_product;
+",This query shows the percentage of workloads executed in the last 30 days that used the more cost-effective Databricks SQL Warehouse instead of All-Purpose compute for SQL and BI workloads.
+CO,CO-01,CO-01-04,CO-01-04,"SELECT cast(regexp_extract(dbr_version, '^(\\d+\\.\\d+)',1) as decimal(3,1)) as dbr_version, 
+       count(*) as count
+FROM system.compute.clusters 
+WHERE NOT contains(dbr_version, 'custom') 
+  AND cluster_source not in('PIPELINE','PIPELINE_MAINTENANCE') 
+  AND delete_time is null
+GROUP by 1
+ORDER BY dbr_version DESC;","This query displays the number of clusters running on each Databricks Runtime version in the current workspace. Ideally, all clusters should be using the latest runtime version."
+CO,CO-01,CO-01-05,CO-01-05,,
+CO,CO-01,CO-01-06,CO-01-06A,"WITH serverless AS (
+    SELECT sum(usage_quantity) as dbu 
+    FROM system.billing.usage u 
+    WHERE contains(u.sku_name, 'SERVERLESS') 
+        AND u.billing_origin_product in ('ALL_PURPOSE','SQL','JOBS', 'DLT','INTERACTIVE') 
+        AND date_diff(day, u.usage_start_time, now()) <28
+),
+total AS (
+    SELECT sum(usage_quantity) as dbu 
+    FROM system.billing.usage u 
+    WHERE u.billing_origin_product in ('ALL_PURPOSE','SQL','JOBS', 'DLT','INTERACTIVE') 
+        AND date_diff(day, u.usage_start_time, now()) <28
+)
+SELECT serverless.dbu * 100 / total.dbu as serverless_dbu_percent 
+FROM serverless 
+CROSS JOIN total;",This SQL query calculates the percentage of overall workloads in the current Databricks workspace that are using Serverless compute.
+CO,CO-01,CO-01-06,CO-01-06B,"SELECT 
+CASE 
+    WHEN t1.sku_name LIKE '%SERVERLESS_SQL%' THEN 'SQL_SERVERLESS' 
+    WHEN t1.sku_name LIKE '%ENTERPRISE_SQL_COMPUTE%' THEN 'SQL_CLASSIC'
+    WHEN t1.sku_name LIKE '%SQL_PRO%' THEN 'SQL_PRO'
+    ELSE 'Other' 
+END as sql_sku_name,
+SUM(t1.usage_quantity * list_prices.pricing.default) as list_cost
+FROM system.billing.usage t1
+INNER JOIN system.billing.list_prices 
+    ON t1.cloud = list_prices.cloud 
+    AND t1.sku_name = list_prices.sku_name 
+    AND t1.usage_start_time >= list_prices.price_start_time 
+    AND (t1.usage_end_time <= list_prices.price_end_time OR list_prices.price_end_time IS NULL)
+WHERE t1.sku_name LIKE '%SQL%' 
+    AND t1.usage_date >= current_date() - interval 30 days
+GROUP BY ALL;","This SQL query shows the cost distribution of SQL Warehouses by type, highlighting the proportion of Serverless usage compared with Classic compute within the current workspace"
+CO,CO-01,CO-01-07,CO-01-07,,
+CO,CO-01,CO-01-08,CO-01-08,"WITH per_cluster_daily AS (
+    SELECT
+    cluster_id,
+    DATE_TRUNC('DAY', start_time) AS day,
+    AVG(cpu_user_percent + cpu_system_percent) AS avg_cpu_usage_percent,
+    AVG(mem_used_percent) AS avg_memory_usage_percent
+    FROM system.compute.node_timeline
+    WHERE start_time >= CURRENT_DATE - INTERVAL 28 DAYS
+    GROUP BY cluster_id, DATE_TRUNC('DAY', start_time)
+)
+SELECT
+    percentile(avg_cpu_usage_percent, 0.75) as cpu_usage_percent_p75,
+    percentile(avg_memory_usage_percent, 0.75) as memory_usage_percent_p75
+FROM per_cluster_daily
+GROUP BY ALL;","This SQL query reports the 75th percentile (P75) CPU and memory utilisation for compute resources configured in the current Databricks workspace.
+"
+CO,CO-01,CO-01-09,CO-01-09,,
+CO,CO-02,CO-02-01,CO-02-01,"WITH autoscaling_count AS (
+    SELECT count(*) as autoscaling_count 
+    FROM system.compute.clusters 
+    WHERE max_autoscale_workers IS NOT NULL 
+    AND delete_time IS NULL
+),
+total_clusters_count AS (
+    SELECT count(*) as total_clusters_count 
+    FROM system.compute.clusters 
+    WHERE delete_time IS NULL
+)
+SELECT autoscaling_count.autoscaling_count * 100 / total_clusters_count.total_clusters_count as autoscaling_percent 
+FROM total_clusters_count 
+CROSS JOIN autoscaling_count;",This query shows the percentage of clusters with auto-scaling enabled in the current Databricks workspace.
+CO,CO-02,CO-02-02,CO-02-02,"SELECT percentile(c.auto_termination_minutes, 0.75) as p_75_auto_termination_minutes, 
+        max(c.auto_termination_minutes) as max_auto_termination_minutes, 
+        count_if(c.auto_termination_minutes is null) as count_clusters_without_autoterminations, 
+        count_if(c.auto_termination_minutes is not null) as count_clusters_with_autoterminations, 
+        (count_clusters_without_autoterminations*100)/count(*) as percent_clusters_without_autoterminations 
+FROM system.compute.clusters c 
+WHERE c.cluster_source in ('UI','API') 
+    AND c.delete_time IS NULL;",This query reports the number of Databricks usage table reads over the past 30 days within the workspace — a strong indicator of whether cost observability dashboards and similar monitoring tools are in use.
+CO,CO-02,CO-02-03,CO-02-03,,
+CO,CO-03,CO-03-01,CO-03-01,"SELECT
+    count(*) as usage_read
+FROM system.access.audit
+WHERE service_name = 'unityCatalog'
+    AND action_name = 'getTable'
+    AND request_params.full_name_arg = 'system.billing.usage'
+    AND user_identity.email != 'System-User'
+    AND (date_diff(day, event_date, current_date()) <= 30);","This query reports the number of Databricks usage table reads over the past 30 days within the workspace — a strong indicator of whether cost observability dashboards and similar monitoring tools are in use.
+"
+CO,CO-03,CO-03-02,CO-03-02a,"SELECT array_size(map_entries(tags)) as number_of_tags, count(*) as count 
+FROM system.compute.clusters 
+WHERE tags.ResourceClass IS NULL 
+    AND delete_time IS NULL
+GROUP BY number_of_tags
+ORDER BY count DESC, number_of_tags DESC;","This query counts the number of compute instances configured in the workspace, grouped by the number of tags applied. Tagging is a best practice for cost observability and governance."
+CO,CO-03,CO-03-02,CO-03-02b,"WITH tag_counts AS (
+    SELECT explode(map_keys(tags)) as tag, count(*) as count
+    FROM system.compute.clusters
+    GROUP BY 1
+),
+cluster_count AS (SELECT count(*) as count FROM system.compute.clusters)
+SELECT tag_counts.tag,
+        sum(tag_counts.count) / any_value(cluster_count.count) *100 as percent
+FROM tag_counts 
+CROSS JOIN cluster_count
+GROUP BY tag_counts.tag
+ORDER BY percent DESC;","This query shows the percentage breakdown of tags used within the workspace, helping identify gaps or inconsistencies in tagging policies."
+CO,CO-03,CO-03-03,CO-03-03,,
+CO,CO-03,CO-03-04,CO-03-04,,
+CO,CO-03,CO-03-05,CO-03-05,,
+CO,CO-04,CO-04-01,CO-04-01,,
+CO,CO-04,CO-04-02,CO-04-02,,

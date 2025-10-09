@@ -1,6 +1,6 @@
 [project]
 name = "custom-server"
-version = "0.2.5"
+version = "0.3.0"
 description = "Example custom MCP server on Databricks Apps"
 readme = "README.md"
 authors = [

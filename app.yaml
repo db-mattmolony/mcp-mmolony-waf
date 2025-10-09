@@ -2,7 +2,7 @@ command: ["uvicorn", "custom_server.app:app"]
 
 env:
   - name: "DATABRICKS_WAREHOUSE_ID"
-    value: "30d6e63b35f828c5"
+    value: "4b9b953939869799"
   # User token environment variables (these may be provided by Databricks Apps)
   - name: "DATABRICKS_USER_TOKEN"
     value: "${secrets.user.token}"

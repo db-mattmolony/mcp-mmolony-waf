@@ -17,6 +17,37 @@ resources:
       name: "mcp-mmolony-waf"
       description: "MCP Server on Databricks Apps for the Well Architected Framework"
       source_code_path: ./.build
+      resources:
+        - name: "sql_warehouse"
+          description: "A SQL warehouse for the app to use"
+          sql_warehouse:
+            id: 4b9b953939869799
+            permission: "CAN_USE"
+
+  # # Catalog and Schema for WAF data
+  # schemas:
+  #   waf_schema:
+  #     name: waf_data_model
+  #     catalog_name: db_well_architected_framework
+  #     comment: "Schema containing Well-Architected Framework reference data"
+
+  # # Job to load CSV data into tables
+  # jobs:
+  #   load_waf_data:
+  #     name: "Load WAF CSV Data"
+  #     description: "Loads WAF CSV files into Unity Catalog tables"
+  #     tasks:
+  #       - task_key: create_tables
+  #         notebook_task:
+  #           notebook_path: ./setup/load_waf_tables.py
+  #           source: WORKSPACE
+  #         existing_cluster_id: "${var.cluster_id}"
+  #         libraries:
+  #           - whl: ./dist/*.whl
+  #     schedule:
+  #       quartz_cron_expression: "0 0 2 * * ?"  # Run daily at 2 AM
+  #       timezone_id: "UTC"
+  #       pause_status: "PAUSED"  # Start paused, run manually to load data
 
 targets:
   dev:

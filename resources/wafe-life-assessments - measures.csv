@@ -9,14 +9,14 @@ Topics to cover with data goevernance include
 - Data architecture and integration
 - Metadata management to ensure that data is well understood
 Unity catalog is at the center of the Databricks Data Intelligence Platform and helps with many aspects of data governance from metadata management, lineage, to access control.
-AWS | AZURE | GCP"
+"
 DG,DG-01,DG-01-02,Manage metadata for all data assets in one place,Unity Catalog,"The benefits of managing all metadata in one place are similar to the benefits of maintaining a single source of truth for all your data. These include reduced data redundancy, increased data integrity, and avoiding misunderstandings based on different definitions or taxonomies. It's also easier to implement global policies, standards, and rules when dealing with one source.
 
 As a best practice, run the lakehouse in a single account with one Unity Catalog. The top-level container of objects in Unity Catalog is a metastore. It stores data assets (such as tables and views) and the permissions that govern access to them. Use a single metastore per cloud region and do not access metastores across regions to avoid latency issues.
-AWS | Azure | GCP
+
 
 Databricks recommends using catalogs to provide segregation across your organization’s information architecture. Often this means that catalogs can correspond to software development environment scope, team, or business unit.
-AWS | Azure | GCP "
+ "
 DG,DG-01,DG-01-03,Track data and AI lineage to drive visibility of the data,Unity Catalog,"Data lineage is a powerful tool that helps data leaders drive greater visibility and understanding of the data in their organizations. It describes the transformation and refinement of data from source to insight. Lineage includes the capture of all relevant metadata and events associated with the data in its lifecycle, including the source of the data set, what other data sets were used to create it, who created it and when, what transformations were performed, what other data sets use it, and many other events and attributes. Data lineage can be used for many data-related use cases:
 
 - Compliance and audit readiness: Data lineage helps organizations trace the source of tables and fields. This is important for meeting the requirements of many compliance regulations, such as General Data Protection Regulation (GDPR), California Consumer Privacy Act (CCPA), Health Insurance Portability and Accountability Act (HIPAA), Basel Committee on Banking Supervision (BCBS) 239, and Sarbanes-Oxley Act (SOX).
@@ -28,36 +28,36 @@ DG,DG-01,DG-01-03,Track data and AI lineage to drive visibility of the data,Unit
 - Debugging and diagnostics: In the event of an unexpected result, data lineage helps data teams perform root cause analysis by tracing the error back to its source. This dramatically reduces debugging time.
 
 Unity Catalog captures runtime data lineage across queries run on Databricks. Lineage is supported for all languages and is captured down to the column level. Lineage data includes notebooks, workflows, and dashboards related to the query. Lineage can be visualized in Catalog Explorer in near real-time and retrieved with the Databricks Data Lineage REST API.
-AWS | Azure | GCP "
+ "
 DG,DG-01,DG-01-04,Add consistent descriptions to your metadata,Databricks IQ; Unity Catalog,"Enriching metadata with comments can help accelerate processes...
 
 AI-generated comments are intended to provide a general description of tables and columns based on the schema. The descriptions are tuned for data in a business and enterprise context, using example schemas from several open datasets across various industries. The model was evaluated with hundreds of simulated samples to verify it avoids generating harmful or inappropriate descriptions.
-AWS | Azure | GCP"
+"
 DG,DG-01,DG-01-05,Allow easy data discovery for data consumers,Unity Catalog,"Easy data discovery enables data scientists, data analysts, and data engineers to quickly discover and reference relevant data and accelerate time to value.
 
 Databricks Catalog Explorer provides a UI to explore and manage data, schemas (databases), tables, and permissions, data owners, external locations, and credentials. Additionally, you can use the Insights tab in Catalog Explorer to view the most frequent recent queries and users of any table registered in Unity Catalog.
-AWS | Azure | GCP"
+"
 DG,DG-01,DG-01-06,Govern AI assets together with data,Unity Catalog,"Governing all your AI assets is important because it ensures unified visibility and control over data and AI assets, which is crucial for maintaining data quality, security, and compliance across different platforms and clouds. This governance facilitates the management of access policies consistently and efficiently, enhancing operational intelligence and ensuring that AI systems operate within regulatory guidelines and business requirements.
 With Unity Catalog, organizations can implement a unified governance framework for their structured and unstructured data, machine learning models, notebooks, features, functions, and files, enhancing security and compliance across clouds and platforms.
-AWS | Azure | GCP
+
 
 Model aliases in machine learning workflows allow you to assign a mutable, named reference to a specific version of a registered model. This functionality is beneficial for tracking and managing different stages of a model’s lifecycle, indicating the current deployment status of any given model version.
-AWS | Azure | GCP"
+"
 DG,DG-02,DG-02-01,Centralize access control for all data and AI assets,Unity Catalog,"Centralizing access control for all data assets is important because it simplifies the security and governance of your data and AI assets by providing a central place to administer and audit access to these assets. This approach helps in managing data and AI object access more efficiently, ensuring that operational requirements around segregation of duty are enforced, which is crucial for regulatory compliance and risk avoidance.
 
 Databricks provides access to audit logs of activities performed by Databricks users, allowing your enterprise to monitor detailed Databricks usage patterns. There are two types of logs: Workspace-level audit logs with workspace-level events and account-level audit logs with account-level events.
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 DG,DG-02,DG-02-02,Configure audit logging,Unity Catalog,"Audit logging is important for providing a detailed account of system activities (user actions, changes to settings, etc.) that could impact the system's integrity. Whereas standard system logs are designed to help developers troubleshoot errors, audit logs provide a historical record of activity for compliance purposes and other business policy enforcement. Maintaining robust audit logs can help identify and ensure preparedness in the face of threats, breaches, fraud, and other system issues.
 
 Databricks provides access to audit logs of activities performed by Databricks users, allowing your enterprise to monitor detailed Databricks usage patterns. There are two types of logs: Workspace-level audit logs with workspace-level events and account-level audit logs with account-level events.
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 DG,DG-02,DG-02-03,Audit data platform events,Unity Catalog,"Auditing data platform events is important because (see above)
 
 Unity Catalog captures an audit log of actions performed against the metastore. This enables admins to access fine-grained details about who accessed a given dataset and what actions they performed. 
-AWS | Azure | GCP
-AWS | Azure | GCP
+
+
 
 For secure sharing with Delta Sharing, Databricks provides audit logs to monitor Delta Sharing events, including:
 
@@ -65,7 +65,7 @@ For secure sharing with Delta Sharing, Databricks provides audit logs to monitor
 - When a recipient accesses an activation link and downloads the credential.
 - When a recipient accesses shares or data in shared tables.
 - When a recipient’s credential is rotated or expires. 
-AWS | Azure | GCP"
+"
 DG,DG-03,DG-03-01,Define and document data quality standards,,"Defining clear and actionable data quality standards is crucial, because it helps ensure that data used for analysis, reporting, and decision-making is reliable and trustworthy. Documenting these standards helps ensure that they are upheld.
 
 Data quality standards should be based on the specific needs of the business and should address dimensions of data quality such as accuracy, completeness, consistency, timeliness, and reliability
@@ -77,7 +77,7 @@ Data quality standards should be based on the specific needs of the business and
 DG,DG-03,DG-03-02,"Use data quality tools for profiling, cleansing, validating, and monitoring data",,"Leverage data quality tools for profiling, cleansing, validating, and monitoring data. These tools help in automating the processes of detecting and correcting data quality issues, which is vital for scaling data quality initiatives across large datasets typical in data lakes.
 
 For teams using DLT, you can use expectations to define data quality constraints on the contents of a dataset. Expectations allow you to guarantee data arriving in tables meets data quality requirements and provide insights into data quality for each pipeline update.
-AWS | Azure | GCP"
+"
 DG,DG-03,DG-03-03,Implement and enforce standardized data formats and definitions,,"Standardized data formats and definitions helps achieve uniformity in data representation across all systems to facilitate easier data integration and analysis, reduce costs, and improve decision-making via enhance communication and collaboration between different teams and departments. It also helps provide structure for creating and maintaining data quality.
 
 Develop and enforce a standard data dictionary that includes definitions, formats, and acceptable values for all data elements used across the organization.
@@ -89,8 +89,8 @@ The Databricks Lakehouse comes with a comprehensive [REST API](/api/workspace/in
 
 The REST API provides the lowest level of integration that can always be used. However, the preferred way to integrate with <Databricks> is to use higher level abstractions such as the [Databricks SDKs](/dev-tools/index-sdk.md) or [CLI tools](/dev-tools/index-cli.md). CLI tools are shell-based and allow to easily integrate the Databricks platform into CI/CD and MLOps workflows
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 IU,IU-01,IU-01-02,Use optimized connectors to ingest data sources into the lakehouse,Lakehouse Federation,"Databricks provides optimized connectors for stream messaging services such as Apache Kafka for near-real time data ingestion of data.
 Databricks provides built-in integrations to many cloud-native data systems, as well as extensible JDBC support to connect to other data systems.
 
@@ -99,13 +99,13 @@ Note
 Any query in the Databricks platform that uses a Lakehouse Federation source will be sent to that source. Make sure the source system can handle the load. Also be aware that if the source system is deployed in a different cloud region or cloud, there will be an egress cost for each query.
 Consider to offload access to underlying databases via materialized views to avoid high/concurrent loads on operational databases and reduce egress costs.
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 IU,IU-01,IU-01-03,Use certified partner tools,Databricks Partner Connect,"Using certified partner tools makes it easy to connect data between two systems. These integrations allow you to use the partner solutions while keeping you data unified in the Lakehouse.
 
 Businesses have different needs, and no single tool can meet all of them. Partner Connect allows you to explore and easily integrate with our partners, which cover all aspects of the lakehouse: data ingestion, preparation and transformation, BI and visualization, machine learning, data quality, and so on. Partner Connect lets you create trial accounts with selected Databricks technology partners and connect your Databricks workspace to partner solutions from the Databricks UI. Try partner solutions using your data in the Databricks lakehouse, and then adopt the solutions that best meet your business needs. 
 
-AWS | Azure | GCP"
+"
 IU,IU-01,IU-01-04,Reduce complexity of data engineering pipelines,Delta Live Tables; Autoloader,"Investing in reducing the complexity of data engineering pipelines enables scalability, agility and flexibility to be able to expand and innovate faster. Simplified pipelines make it easier to manage and adapt all of the operational needs of a data engineering pipeline: task orchestration, cluster management, monitoring, data quality, and error handling.
 
 Delta Live Tables is a framework for building reliable, maintainable, and testable data processing pipelines. You define the transformations to perform on your data, and Delta Live Tables manages task orchestration, cluster management, monitoring, data quality, and error handling. See What is Delta Live Tables?.
@@ -114,33 +114,33 @@ Auto Loader incrementally and efficiently processes new data files as they arriv
 
 Auto Loader and Delta Live Tables reduce system dependencies and complexity and significantly improve the interoperability with the cloud storage and between different paradigms like batch and streaming. As a side effect, the simplicity of pipelines increases platform usability.
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 IU,IU-02,IU-02-01,Use open data formats,Delta Lake,"Using an open data format means there are no restrictions on its use. This is important because it removes barriers to accessing and using the data for analysis and driving business insights. Open formats, such as those built on Apache Spark, also add features that boost performance with support for ACID transactions, unified streaming, and batch data processing. Furthermore, open source is community-driven, meaning the community is constantly working on improving existing features and adding new ones, making it easier for users to get the most out of their projects.
 
 The Delta Lake framework has many advantages, from reliability features to high-performance enhancements, and it is also a fully open data format. 
 Additionally, Delta Lake comes with a Delta Standalone library, which opens the Delta format for development projects. It is a single-node Java library that can read from and write to Delta tables. Dozens of third-party tools and applications support Delta Lake. Specifically, this library provides APIs to interact with table metadata in the transaction log, implementing the Delta Transaction Log Protocol to achieve the transactional guarantees of the Delta format.
-AWS | Azure | GCP
-AWS | Azure | GCP
+
+
 
 UniForm takes advantage of the fact that both Delta Lake and Iceberg consist of Parquet data files and a metadata layer. UniForm automatically generates Iceberg metadata asynchronously, allowing Iceberg clients to read Delta tables as if they were Iceberg tables. You can expect negligible Delta write overhead when UniForm is enabled, as the Iceberg conversion and transaction occurs asynchronously after the Delta commit.
 
 A single copy of the data files provides access to both format clients.
-AWS | Azure | GCP"
+"
 IU,IU-02,IU-02-02,Enable secure data sharing for all data and AI assets,Delta Sharing,"Sharing data can lead to better collaboration and decision-making. However, when sharing data, it's important to maintain control over the data use, ensure confidentiality, and establish guidelines for data collection, storage, processing, and sharing - in order to protect your data and remain in ensure compliance with relevant laws and regulations around data sharing.
 
 Delta Sharing provides an open solution for securely sharing live data from your lakehouse to any computing platform. Recipients do not need to be on the Databricks platform, on the same cloud, or on any cloud at all. Delta Sharing is natively integrated with Unity Catalog, enabling organizations to centrally manage and audit shared data across the enterprise and confidently share data assets while meeting security and compliance requirements.
 
 Data providers can share live data from where it resides in their cloud storage without replicating or moving it to another system. This approach reduces the operational costs of data sharing because data providers don't have to replicate data multiple times across clouds, geographies, or data platforms to each of their data consumer 
-AWS | Azure | GCP
+
 
 If you want to share data with users who don't have access to your Unity Catalog metastore, you can use Databricks-to-Databricks Delta Sharing, as long as the recipients have access to a Databricks workspace that is enabled for Unity Catalog. Databricks-to-Databricks sharing lets you share data with users in other Databricks accounts, across cloud regions, across cloud providers. It’s a great way to securely share data across different Unity Catalog metastores in your own Databricks account. 
-AWS | Azure | GCP"
+"
 IU,IU-02,IU-02-03,Use open standards for your AI workflows,MLFlow,"Like using an open source data format, using open standards for your AI workflows has similar benefits of flexibility, agility, cost, and security.
 
 MLflow is an open source platform for managing the ML lifecycle, including experimentation, reproducibility, deployment, and a central model registry. Using MLflow on Databricks provides both advantages: You can write your ML workflow using an open and portable tool and use reliable services operated by Databricks (Tracking Server, Model Registry). It also adds enterprise-grade, scalable model serving, allowing you to host MLflow models as REST endpoints. 
 
-AWS | Azure | GCP"
+"
 IU,IU-03,IU-03-01,Provide a self-service experience across the platform,Databricks Data intelligence Platform,"There are several benefits of a platform where users have autonomy to use the tools and capabilities depending on their needs. Investing in creating a self-service platform makes it easy to scale to serve more users and drives greater efficiency by minimizing the need for human involvement to provision users, resolve issues, and process access requests.
 
 The Databricks Data Intelligence Platform has all the capabilities required to provide a self-service experience. While there might be a mandatory approval step, the best practice is to fully automate the setup when a business unit requests access to the lakehouse. Automatically provision their new environment, sync users and use SSO for authentication, provide access control to common data and separate object storages for their own data, and so on. Together with a central data catalog containing semantically consistent and business-ready data sets, this quickly and securely provides access for new business units to the Lakehouse capabilities and the data they need. 
@@ -152,7 +152,7 @@ Serverless Notebooks","Using serverless has multiple benefits beyond just cost s
 
 For serverless compute on the Databricks platform, the compute layer runs in the customer’s Databricks account. Cloud administrators no longer have to manage complex cloud environments that involve adjusting quotas, creating and maintaining networking assets, and joining billing sources. Users benefit from near-zero waiting times for cluster start and improved concurrency on their queries. 
 
-AWS | Azure | GCP"
+"
 IU,IU-03,IU-03-03,Use pre-defined compute templates,Databricks Cluster Policies,"Pre-defined compute templates can help bring some of the benefits of serverless when it's not available for a particular tool or in your region. Mainly, these templates remove the need for developers to provision their own compute and determine infrastructure needs, thus speeding up time to development.
 
 Remove the burden of defining a cluster (VM type, node size, and cluster size) from end users. This can be achieved in the following ways:
@@ -161,12 +161,12 @@ Provide shared clusters as immediate environments for users. On these clusters, 
 
 Use cluster policies to define t-shirt-sized clusters (S, M, L) for projects as a standardized work environment.
 Blog
-AWS | Azure | GCP"
+"
 IU,IU-03,IU-03-04,Use AI capabilities to increase productivity,Databricks Assistant,"In addition to increasing productivity, AI tools can also help identify patterns in errors and provide additional insights based on the input. Overall, incorporating these tools into the development process can greatly reduce errors and facilitate decision-making - leading to faster time to release.
 
 Databricks Assistant lets you query data through a conversational interface, making you more productive inside Databricks. Describe your task in English and let the Assistant generate SQL queries, explain complex code and automatically fix errors. The Assistant leverages Unity Catalog metadata to understand your tables, columns, descriptions and popular data assets across your company to provide responses that are personalized to you. 
 
-AWS | Azure | GCP"
+"
 IU,IU-04,IU-04-01,Offer reusable data-as-products that the business can trust,,"Data-as-products is a data strategy that can help organizations harness the full potential of their data assets. The raw data into a structured, accessible and valuable product. 
 
 Producing high-quality data-as-product is a primary goal of any data platform. The idea is that data engineering teams apply product thinking to the curated data: The data assets are their products, and the data scientists, ML and BI engineers, or any other business teams that consume data are their customers. These customers should be able to discover, address, and create value from these data-as-products through a self-service experience without the intervention of the specialized data teams. 
@@ -179,25 +179,25 @@ IU,IU-04,IU-04-03,Provide a central catalog for discovery and lineage,Unity Cata
 
 In Unity Catalog, administrators and data stewards manage users and their access to data centrally across all workspaces in a Databricks account. Users in different workspaces can share the same data and, depending on user privileges granted centrally in Unity Catalog, can access data together.
 
-AWS | Azure | GCP"
+"
 OE,OE-01,OE-01-01,Create a dedicated Lakehouse operations team,,"It is a general best practice to have a platform operations team to enable data teams to work on one or more data platforms. This team is responsible for coming up with blueprints and best practices internally. They provide tooling - for example, for infrastructure automation and self-service access - and ensure that security and compliance needs are met. This way, the burden of securing platform data is on a central team, so that distributed teams can focus on working with data and producing new insights. "
 OE,OE-01,OE-01-02,Use enterprise source code management (SCM),Databricks Git Folders,"Source code management (SCM) helps developers work more effectively, which can lead to faster release velocity and lower development costs. Having a tool that helps track changes, maintain code integrity, detect bugs, and roll back to previous versions if need be is an important component of your overall solution architecture.
 
 Databricks Git folders allow users to store notebooks or other files in a Git repository, providing features like cloning a repository, committing and pushing, pulling, branch management and viewing file diffs. Use Git folders for better code visibility and tracking. 
 
-AWS | Azure | GCP"
+"
 OE,OE-01,OE-01-03,Standardize DevOps processes (CI/CD),Databricks Git Folders,"Continuous integration and continuous delivery (CI/CD) refer to developing and delivering software in short, frequent cycles using automation pipelines. While this is by no means a new process, having been ubiquitous in traditional software engineering for decades, it is becoming an increasingly necessary process for data engineering and data science teams. For data products to be valuable, they must be delivered in a timely way. Additionally, consumers must have confidence in the validity of outcomes within these products. By automating the building, testing, and deployment of code, development teams can deliver releases more frequently and reliably than manual processes still prevalent across many data engineering and data science teams.
 
 For more information about best practices for code development using Databricks Git folders, see CI/CD techniques with Git and Databricks Git folders (Repos). This, together with the Databricks REST API, allows you to build automated deployment processes with GitHub Actions, Azure DevOps pipelines, or Jenkins jobs. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 OE,OE-01,OE-01-04,Standardize MLOps processes across enterprise,MLFlow,"MLOps processes provide reproducibility of ML pipelines, enabling more tightly-coupled collaboration across data teams, reducing conflict with devops and IT, and accelerating release velocity. As many models are used to drive key business decisions, standardizing MLops processes ensure that models are developed, tested, and deployed in a consistent and reliable way.
 
 Building and deploying ML models is complex. There are many options available to achieve this, but little in the way of well-defined standards. As a result, over the past few years, we have seen the emergence of machine learning operations (MLOps). MLOps is a set of processes and automation for managing models, data, and code to improve performance stability and long-term efficiency in ML systems. It covers data preparation, exploratory data analysis (EDA), feature engineering, model training, model validation, deployment, and monitoring. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP
+
+
 eBook"
 OE,OE-01,OE-01-05,Define environment isolation strategy,Databricks Workspaces,"Organizing workspaces in Databricks offers several benefits that enhance the efficiency and security of data operations within an enterprise. Key advantages include:
 
@@ -218,11 +218,11 @@ Blog"
 OE,OE-01,OE-01-06,"Streamline the usage and management of various
 large language model (LLM) providers",,"External models are third-party models hosted outside of Databricks. Supported by Model Serving AI Gateway, Databricks external models via the AI Gateway allow you to streamline the usage and management of various large language model (LLM) providers, such as OpenAI and Anthropic, within an organization. You can also use Mosaic AI Model Serving as a provider to serve predictive ML models, which offers rate limits for those endpoints. As part of this support, Model Serving offers a high-level interface that simplifies the interaction with these services by providing a unified endpoint to handle specific LLM-related requests. In addition, Databricks support for external models provides centralized credential management. By storing API keys in one secure location, organizations can enhance their security posture by minimizing the exposure of sensitive API keys throughout the system. It also helps to prevent exposing these keys within code or requiring end users to manage keys safely.
 
-AWS | Azure | GCP"
+"
 OE,OE-01,OE-01-07,Define catalog strategy for your enterprise,Unity Catalog,
 OE,OE-01,OE-01-08,Compare LLM outputs on set prompts,Databricks LLM Playground,"New, no-code visual tools allow users to compare models’ output based on set prompts, which are automatically tracked within MLflow. With integration into Mosaic AI Model Serving, customers can deploy the best model to production. The AI Playground is a chat-like environment where you can test, prompt and compare LLMs.
 
-AWS | Azure | GCP"
+"
 OE,OE-01,OE-01-09,"Build models with all representative, accurate and relevant data sources",,"Harnessing internal data and intellectual
 property to customize large AI models can offer
 a significant competitive edge. However, this
@@ -242,26 +242,26 @@ violations, privacy violations or HIPAA violations."
 OE,OE-02,OE-02-01,Use Infrastructure as Code for deployments and maintenance,Databricks Terraform Provider,"Infrastructure as Code allows developers and operations teams to automatically manage, monitor, and provision resources, instead of manually configuring hardware devices, operating systems, applications, and services.
 
 HashiCorp Terraform is a popular open source tool for creating safe and predictable cloud infrastructure across several cloud providers. The Databricks Terraform provider manages Databricks workspaces and the associated cloud infrastructure using a flexible, powerful tool. The goal of the Databricks Terraform provider is to support all Databricks REST APIs, supporting automation of the most complicated aspects of deploying and managing your data platforms. The Databricks Terraform provider is the recommended tool to deploy and manage clusters and jobs reliably, provision Databricks workspaces, and configure data access. 
-AWS | Azure | GCP"
+"
 OE,OE-02,OE-02-02,Standardize compute configurations,Compute Policies,"Pre-defined compute templates can help bring some of the benefits of serverless when it's not available. Mainly, these templates remove the need for developers to provision their own compute and determine infrastructure needs, thus speeding up time to development.
 
 Use cluster policies to define t-shirt-sized clusters (S, M, L) for projects as a standardized work environment.
 Blog
-AWS | Azure | GCP"
+"
 OE,OE-02,OE-02-03,Use automated workflows for jobs,Databricks Workflows,"Setting up automated workflows for jobs can help reduce unnecessary manual tasks and improve productivity through the DevOps process of creating and deploying jobs.
 
 We recommend using workflows with jobs to schedule data processing and data analysis tasks on Databricks clusters with scalable resources. Jobs can consist of a single task or a large, multitask workflow with complex dependencies. Databricks manages task orchestration, cluster management, monitoring, and error reporting for all your jobs. You can run your jobs immediately or periodically through an easy-to-use scheduling system. You can implement job tasks using notebooks, JARS, Delta Live Tables pipelines, or Python, Scala, Spark submit, and Java applications. See Introduction to Databricks Workflows. 
-AWS | Azure | GCP
+
 
 The comprehensive Databricks REST API is used by external orchestrators to orchestrate Databricks assets, notebooks, and jobs. 
-AWS | Azure | GCP"
+"
 OE,OE-02,OE-02-04,Use automated and event driven file ingestion,Autoloader,"Event-driven (vs. schedule-driven) file ingestion has several benefits, including efficiency, increased data freshness, and real-time data ingestion. Running a job only when an event occurs ensures you're not wasting resources, thus saving costs. Event-driven architectures can also incorporate security measures like role-based access control and audit logging, thus improving overall security posture and protecting data.
 
 Auto Loader incrementally and efficiently processes new data files as they arrive in cloud storage. It can ingest many file formats like JSON, CSV, PARQUET, AVRO, ORC, TEXT, and BINARYFILE. With an input folder on the cloud storage, Auto Loader automatically processes new files as they arrive.
 For one-off ingestions, consider using the command COPY INTO instead. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 OE,OE-02,OE-02-05,Use ETL frameworks for data pipelines,Delta Live Tables,"Using ETL frameworks helps improve data quality, saves time, and makes it easier to analyze larger datasets. They also help eliminate data errors, bottlenecks, and latency.
 
 Delta Live Tables is a declarative framework for building reliable, maintainable, and testable data processing pipelines. You define the transformations to perform on your data and Delta Live Tables manages task orchestration, cluster management, monitoring, data quality, and error handling.
@@ -270,13 +270,13 @@ With Delta Live Tables, easily define end-to-end data pipelines in SQL or Python
 
 To manage data quality, Delta Live Tables monitors data quality trends over time, preventing bad data from flowing into tables through validation and integrity checks with predefined error policies.
 
-AWS | Azure | GCP"
+"
 OE,OE-02,OE-02-06,Follow the deploy-code approach for ML workloads,MLFlow,"Deploying models as code is taking a DevOps approach to machine learning. This approach has several benefits. Models are versioned along with other code, releases are deployed as a unit, and deployments are reproducible (fallback is possible).
 
 The deploy-code approach to model deployment involves developing and testing training code and ancillary code in a training environment, followed by promotion to a staging environment for further testing on a subset of data. Once validated, the code is promoted to a production environment for final training and testing on the full dataset. The model and ancillary pipelines are then deployed. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP
+
+
 eBook"
 OE,OE-02,OE-02-07,Use a model registry to decouple code and model lifecycle,Unity Catalog,"Since model lifecycles do not correspond one-to-one with code lifecycles, it makes sense for model management to have its own service. 
 
@@ -284,12 +284,12 @@ Unity Catalog in Databricks offers a comprehensive solution for managing the lif
 
 The catalog ensures robust governance with account-level permissions and integrates seamlessly with other tools and systems. It also supports model serving at scale and provides detailed lineage and real-time performance monitoring, ensuring that models remain effective and compliant throughout their lifecycle.
 
-AWS | Azure | GCP"
+"
 OE,OE-02,OE-02-08,Automate ML experiment tracking,MLFlow,"Tracking ML experiments is the process of saving relevant metadata for each experiment and organizing the experiments. This metadata includes experiment inputs/outputs, parameters, models, and other artifacts. The goal of experiment tracking is to create reproducible results across every stage of the ML model development process. Automating this process makes scaling the number of experiments easier, and ensures cosistency in the metadata captured across all experiments.
 
 Databricks Autologging is a no-code solution that extends MLflow automatic logging to deliver automatic experiment tracking for machine learning training sessions on Databricks. Databricks Auto Logging automatically captures model parameters, metrics, files and lineage information when you train models with training runs recorded as MLflow tracking runs. 
 
-AWS | Azure | GCP"
+"
 OE,OE-02,OE-02-09,Reuse the same infrastructure to manage ML pipelines,Databricks Terraform provider,"The data use for ML pipelines comes from the same sources as data used for other data pipelines. In addition, ML and data pipelines are similar in that they both should be monitored regularly and involve preparation of data for analysis by business users or model training. They both also need to be scalable and secure. In both cases, the infrastructure used should support these activities.
 
 ML pipelines should be automated using many of the same techniques as other data pipelines. Use Databricks Terraform provider to automate deployment. ML requires deploying infrastructure such as inference jobs, serving endpoints, and featurization jobs. All ML pipelines can be automated as Workflows with Jobs, and many data-centric ML pipelines can use the more specialized Auto Loader to ingest images and other data and Delta Live Tables to compute features or to monitor metrics. 
@@ -299,10 +299,10 @@ OE,OE-02,OE-02-10,Utilize declarative management for complex data and ML pipelin
 
 Databricks Asset Bundles (DABs) are a new tool for streamlining the development of complex data, analytics, and ML projects for the Databricks platform. Bundles make it easy to manage complex projects during active development by providing CI/CD capabilities in your software development workflow with a single concise and declarative YAML syntax. By using bundles to automate your project’s tests, deployments, and configuration management you can reduce errors while promoting software best practices across your organization as templated projects. 
 
-AWS | Azure | GCP"
+"
 OE,OE-02,OE-02-11,Automate LLM evaluation,,"The “LLM-as-a-judge” feature in MLflow 2.8 automates LLM evaluation, offering a practical alternative to human judgment. It’s designed to be efficient and cost-effective, maintaining consistency with human scores. This tool supports various metrics, including standard and customizable GenAI metrics, and allows users to select an LLM as a judge and define specific grading criteria.
 
-AWS | Azure | GCP"
+"
 OE,OE-03,OE-03-01,Establish monitoring processes,Databricks Platform,"Monitoring provides important information about jobs and data that can help drive decision-making when a job fails or data is missing - as well as alerts when these events take place, so you can take timely action.
 
 You can track metrics such as the number of failed jobs, tables that are not receiving data, the latest ingested timestamp, table ingest rate, and the runtime of queries"
@@ -313,23 +313,23 @@ Integration with Cloud Monitoring Services:
 - Similarly, for Azure Databricks, you can use Azure Monitor to send monitoring data from Databricks and set up advanced monitoring and alerting capabilities.
 
 Databricks Lakehouse Monitoring: This feature lets you monitor the statistical properties and quality of the data in all the tables in your account. It also allows you to track the performance of machine learning models by monitoring inference tables that contain model inputs and predictions
-AWS | Azure | GCP
+
 
 Databricks SQL alerts can monitor the metrics table for security-based conditions, ensuring data integrity and timely response to potential issues:
 - Statistic range Alert: Triggers when a specific statistic, such as the fraction of missing values, exceeds a predetermined threshold
 - Data distribution shift alert: Activates upon shifts in data distribution, as indicated by the drift metrics table
 - Baseline divergence alert: Alerts if data significantly diverges from a baseline, suggesting potential needs for data analysis or model retraining, particularly in InferenceLog analysis
-AWS | Azure | GCP
+
 
 Delta Live Tables pipeline monitoring: Use built-in features in Delta Live Tables for monitoring and observability for pipelines, including data lineage, update history, and data quality reporting.
-AWS | Azure | GCP"
+"
 OE,OE-03,OE-03-03,Establish an incident response strategy,,"It is critical to have an incident response strategy to minimize the risk of business disruption and financial, operational, and reputational damage to your organization.
 
 This includes understanding the process for submitting.a support ticket with Databricks and the esclation process as well as having it documented for your broader organization to reference.
 
 Databricks regularly provides previews to give you a chance to evaluate and provide feedback on features before they’re generally available (GA). Previews come in various degrees of maturity with different support options based on release type. This documentation outlines the support details for each release type.
 
-AWS | Azure | GCP"
+"
 OE,OE-03,OE-03-04,Triggering actions in response to a specific event,,"Triggering actions in response to specific events helps automate processes and minimize the need to manually manage models and workflows.
 
 Webhooks in the MLflow Model Registry enable you to automate machine learning workflow by
@@ -339,18 +339,18 @@ triggering actions in response to specific events. These webhooks facilitate sea
 - Model fairness evaluation: Invoke a workflow to assess model fairness and bias upon a production transition request
 - Automated deployment: Trigger a deployment pipeline when a new tag is created on a model
 
-AWS | Azure | GCP"
+"
 OE,OE-04,OE-04-01,Manage service limits and quotas,Cloud; Databricks Platform,"Manage service limits and quotas is important for maintaining a well-functioning infrastructure and preventing unexpected costs. They prevent accidental provisioning of more resources than needed and limit API requests. As a result, they also protect against potential security incidents that may increase bills.
 
 Every service launched on a cloud will have to take limits into account, such as access rate limits, number of instances, number of users, and memory requirements. For your cloud provider, check the cloud limits. Before designing a solution, these limits must be understood. 
-AWS | Azure | GCP
-AWS | Azure | GCP
+
+
 
 ""Databricks platform limits: These are specific limits for Databricks resources. The limits for the overall platform are documented in Limits.
-AWS | Azure | GCP
+
 
 Unity Catalog limits: Unity Catalog Resource Quotas
-AWS | Azure | GCP"
+"
 OE,OE-04,OE-04-02,Invest in capacity planning,Databricks Platform,"Capacity planning involves managing cloud resources, such as storage, compute, and networking to maintain performance while optimizing costs.
 
 Understanding and planning for high priority (volume) events is important. If the provisioned cloud resources are not sufficients and workloads can't scale, such increases in volume will cause an outage. 
@@ -362,7 +362,7 @@ Plan for fluctuation in the expected load that can occur for several reasons lik
 - Cost analysis to determine how much improvement will be realized in the application if costs are increased. "
 SC,SCP-0,SCP-01-01,Authenticate via single sign-on.,Databricks SSO,"Single sign-on enables you to authenticate your users using your organization’s identity provider. Databricks recommends configuring SSO for greater security and improved usability. Once SSO is configured, you can enable fine-grained access control, such as multi-factor authentication, via your identity provider. Unified login allows you to manage one SSO configuration in your account that is used for the account and Databricks workspaces. If your account was created before June 21, 2023, you can also manage SSO individually on your account and workspaces. See Set up SSO in your Databricks account console and Set up SSO for your workspace. 
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-01-02,Use multifactor authentication.,Databricks SSO,Use MFA with your identity provider and use SSO with databricks.
 SC,SCP-0,SCP-01-03,Disable local passwords.,Databricks SSO,"Use SSO with databricks, to ensure no local password are used with databricks. for Admins Use a Password policy.
 Databricks allows you to set a password policy for all users, including the Account Owner. You can set password length, complexity requirements, and expiration rules to ensure that passwords are secure and regularly updated."
@@ -370,21 +370,21 @@ SC,SCP-0,SCP-01-04,Set complex local passwords.,Databricks SSO,"Password policy:
 SC,SCP-0,SCP-01-05,Separate admin accounts from normal user accounts.,Databricks Admin,"There are two main levels of admin privileges available on the Databricks platform:
 
 Account admins: Manage the Databricks account, including workspace creation, user management, cloud resources, and account usage monitoring.
-AWS | Azure | GCP
+
 
 Workspace admins: Manage workspace identities, access control, settings, and features for individual workspaces in the account.
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-01-06,Use token management.,Token Management,"When personal access tokens are enabled on a workspace, users with the CAN USE permission can generate personal access tokens to access Databricks REST APIs, and they can generate these tokens with any expiration date they like, including an indefinite lifetime. By default, no non-admin workspace users have the CAN USE permission, meaning that they cannot create or use personal access tokens.
 
 As a Databricks workspace admin, you can disable personal access tokens for a workspace, monitor and revoke tokens, control which non-admin users can create tokens and use tokens, and set a maximum lifetime for new tokens.
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-01-07,SCIM synchronization of users and groups.,Scim Sync,"SCIM lets you use an identity provider (IdP) to create users in Databricks, give them the proper level of access, and remove access (deprovision them) when they leave your organization or no longer need access to Databricks.
 
 You can use a SCIM provisioning connector in your IdP or invoke the Identity and Access Management SCIM APIs to manage provisioning. You can also use these APIs to manage 
 identities in Databricks directly, without an IdP.
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-01-08,Limit cluster creation rights.,Databricks Cluster Policies,"A policy is a tool workspace admins can use to limit a user or group’s compute creation permissions based on a set of policy rules.
 Policies provide the following benefits:
 
@@ -394,45 +394,45 @@ Simplify the user interface and enable more users to create their own clusters (
 Control cost by limiting per cluster maximum cost (by setting limits on attributes whose values contribute to hourly price).
 Enforce cluster-scoped library installations (Public Preview).
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-01-09,Store and use secrets securely.,Databricks Secret Management,https://docs.databricks.com/en/security/secrets/index.html
 SC,SCP-0,SCP-01-10,Cross-account IAM role configuration.,,https://docs.databricks.com/en/administration-guide/cloud-configurations/aws/permissions.html
 SC,SCP-0,SCP-01-11,Customer-approved workspace login.,Databricks SSO,"Single sign-on enables you to authenticate your users using your organization’s identity provider. Databricks recommends configuring SSO for greater security and improved usability. Once SSO is configured, you can enable fine-grained access control, such as multi-factor authentication, via your identity provider. Unified login allows you to manage one SSO configuration in your account that is used for the account and Databricks workspaces. If your account was created before June 21, 2023, you can also manage SSO individually on your account and workspaces. See Set up SSO in your Databricks account console and Set up SSO for your workspace. 
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-01-12,Use clusters that support user isolation.,Unity Catalog,"Access mode is a security feature that determines who can use the compute and what data they can access via the compute. Every compute in Databricks has an access mode.
 
 Databricks recommends that you use shared access mode for all workloads. Only use the single user access mode if your required functionality is not supported by shared access mode. 
 
-AWS | Azure | GCP
+
 Blog
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-01-13,Use service principals to run production jobs.,Unity Catalog,"A service principal is an identity that you create in Databricks for use with automated tools, jobs, and applications. Service principals give automated tools and scripts API-only access to Databricks resources, providing greater security than using users or groups.
 
 You can grant and restrict a service principal’s access to resources in the same way as you can a Databricks user. For example, you can do the following:
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-02-01,Avoid storing production data in DBFS.,Databricks Workspace,"Because the DBFS root is accessible to all users in a workspace, all users can access any data stored here. It is important to instruct users to avoid using this location for storing sensitive data. The default location for managed tables in the Hive metastore on Databricks is the DBFS root; to prevent end users who create managed tables from writing to the DBFS root, declare a location on external storage when creating databases in the Hive metastore.
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-02-02,Secure access to cloud storage.,Unity Catalog,"Databricks recommends using Unity Catalog to manage access to all data stored in cloud object storage. Unity Catalog provides a suite of tools to configure secure connections to cloud object storage.
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-02-03,Use data exfiltration settings within the admin console.,Databricks Workspace,https://www.databricks.com/blog/2021/02/02/data-exfiltration-protection-with-databricks-on-aws.html
 SC,SCP-0,SCP-02-04,Use bucket versioning.,Cloud,You can use S3 bucket versioning to provide additional redundancy for data stored with Delta Lake. Databricks recommends implementing a lifecycle management policy for all S3 buckets with versioning enabled. Databricks recommends retaining three versions.
 SC,SCP-0,SCP-02-05,Encrypt storage and restrict access.,Unity Catalog,"An external location is an object that combines a cloud storage path with a storage credential that authorizes access to the cloud storage path. Each storage location is subject to Unity Catalog access-control policies that control which users and groups can access the credential. If a user does not have access to a storage location in Unity Catalog, the request fails and Unity Catalog does not attempt to authenticate to your cloud tenant on the user’s behalf.  
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-02-06,Add a customer-managed key for managed services.,Unity Catalog,"Databricks has two customer-managed key use cases that involve different types of data and locations:
 
 Managed services: Data in the Databricks control plane (notebooks, secrets, and Databricks SQL query data).
 Workspace storage: Your workspace root S3 buckets and the EBS volumes of compute resources in the classic compute plane.
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-02-07,Add a customer-managed key for workspace storage.,Databricks Workspace,https://www.databricks.com/blog/2021/02/02/data-exfiltration-protection-with-databricks-on-aws.html
 SC,SCP-0,SCP-03-01,Deploy with a customer-managed VPC or VNet.,Cloud,"By default, clusters are created in a single AWS VPC (Virtual Private Cloud) that Databricks creates and configures in your AWS account. You can optionally create your Databricks workspaces in your own VPC, a feature known as customer-managed VPC. You can use a customer-managed VPC to exercise more control over your network configurations to comply with specific cloud security and governance standards your organization may require. To configure your workspace to use AWS Private Link for any type of connection, your workspace must use a customer-managed VPC. 
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-03-02,Use IP access lists.,Cloud,https://docs.databricks.com/en/security/network/front-end/ip-access-list.html
 SC,SCP-0,SCP-03-03,Implement network exfiltration protections.,Cloud,https://www.databricks.com/blog/2021/02/02/data-exfiltration-protection-with-databricks-on-aws.html
 SC,SCP-0,SCP-03-04,Apply VPC service controls.,Databricks Workspace,https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/implementing-console-private-access-policies.html
@@ -440,7 +440,7 @@ SC,SCP-0,SCP-03-05,Use VPC endpoint policies.,IP access List,https://docs.aws.am
 SC,SCP-0,SCP-03-06,Configure Private Link.,Private link,https://docs.databricks.com/en/security/network/classic/privatelink.html
 SC,SCP-0,SCP-04-01,Review the Shared Responsibility Model.,Shared Responsibility Model,"The Databricks shared responsibility model outlines the security and compliance obligations of Databricks, the cloud service provider and the customer with respect to the data and services on the Databricks platform.
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-05-01,Review the Databricks compliance programs.,Security and Compliance Guide,https://docs.databricks.com/en/security/index.html
 SC,SCP-0,SCP-06-01,Monitor workspace using System tables,Unity Catalog,https://community.databricks.com/t5/technical-blog/overwatch-the-observability-tool-for-databricks/ba-p/54120
 SC,SCP-0,SCP-06-02,Use Databricks audit log.,Unity Catalog,https://docs.databricks.com/en/administration-guide/system-tables/audit-logs.html
@@ -459,12 +459,12 @@ compliance requirements:
 3. Cluster update enforcement (auto-restart after 25 days)
 4. HIPAA, PCI-DSS, FedRAMP Moderate compliant features and controls
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 SC,SCP-0,SCP-06-05,Configure tagging to monitor usage and enable charge-back.,Tagging,"To track Databricks usage through to AWS resource billing can configure tagging on clusters or pools. These can also be
 enforced via cluster policies for different groups within your organization.
 
-AWS | Azure | GCP"
+"
 SC,SCP-0,SCP-07-01,Use AWS Nitro instances.,Databricks Compliance security profile,"AWS Nitro instances can provide two major security benefits:
 1. AWS Nitro instances use NVMe disks that automatically encrypt data at rest. From AWS docs as of July 19 2021:
 The data on NVMe instance storage is encrypted using an XTS-AES-256 block cipher implemented in a
@@ -479,9 +479,9 @@ Databricks cannot authoritatively provide detail on capabilities in AWS, and the
 best-effort basis as a convenience to Databricks customers."
 SC,SCP-0,SCP-07-02,Service quotas.,Databricks Quotas,"Every service launched on a cloud will have to take limits into account, such as access rate limits, number of instances, number of users, and memory requirements. For your cloud provider, check the cloud limits. Before designing a solution, these limits must be understood. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+
+"
 SC,SCP-0,SCP-07-03,Leverage CI/CD processes to scan code for hard-coded secrets.,Cloud,"Mature organizations often build production workloads by using CI/CD to integrate code scanning, better control
 permissions, perform linting, and more. When there is highly sensitive data analyzed, a CI/CD process can also allow
 scanning for known scenarios such as hard coded secrets."
@@ -497,19 +497,19 @@ Those who are concerned about supply-chain attacks, can host their own repositor
 use those instead. You can block access to other sources of libraries. Documentation for doing so is outside the scope of
 this document, but reach out to your Databricks team for assistance as required. 
 
-AWS | Azure | GCP"
+"
 R,R-01,R-01-01,Use a data format that supports ACID transactions,Delta Lake,"Delta Lake is an open source storage format that brings reliability to data lakes. Delta Lake provides ACID transactions, schema enforcement, scalable metadata handling, and unifies streaming and batch data processing. Delta Lake runs on top of your existing data lake and is fully compatible with Apache Spark APIs. Delta Lake on Databricks allows you to configure Delta Lake based on your workload patterns. 
 
-AWS | Azure | GCP"
+"
 R,R-01,R-01-02,Use a resilient distributed data engine for all workloads,Apache Spark; Photon,"Apache Spark, as the compute engine of the Databricks lakehouse, is based on resilient distributed data processing. In case of an internal Spark task not returning a result as expected, Apache Spark automatically reschedules the missing tasks and continues with the execution of the entire job. This is helpful for failures outside the code, like a short network issue or a revoked spot VM. Working with both the SQL API and the Spark DataFrame API comes with this resilience built into the engine.
 
 In the Databricks lakehouse, Photon, a native vectorized engine entirely written in C++, is high performance compute compatible with Apache Spark APIs. 
 
-AWS | Azure | GCP"
+"
 R,R-01,R-01-03,Automatically rescue invalid or nonconforming data,Delta Live Tables,"Invalid or nonconforming data can lead to crashes of workloads that rely on an established data format. To increase the end-to-end resilience of the whole process, it is best practice to filter out invalid and nonconforming data at ingestion. Supporting rescued data ensures you never lose or miss out on data during ingest or ETL. The rescued data column contains any data that wasn’t parsed, either because it was missing from the given schema, because there was a type mismatch, or the column casing in the record or file didn’t match that in the schema. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 R,R-01,R-01-04,Configure jobs for automatic retries and termination,Databricks Workflows,"Distributed systems are complex, and a failure at one point can potentially cascade throughout the system.
 
 Databricks jobs support an automatic retry policy that determines when and how many times failed runs are retried.
@@ -518,17 +518,17 @@ Delta Live Tables also automates failure recovery by using escalating retries to
 
 On the other hand, a task that hangs can prevent the whole job from finishing, thus incurring high costs. Databricks jobs support a timeout configuration to terminate jobs that take longer than expected. 
 
-AWS | Azure | GCP"
+"
 R,R-01,R-01-05,Use a scalable and production-grade model serving infrastructure,Databricks Model Serving,"For batch and streaming inference, use Databricks jobs and MLflow to deploy models as Apache Spark UDFs to leverage job scheduling, retries, autoscaling, and so on. 
 Model serving provides a scalable and production-grade model real-time serving infrastructure. It processes your machine learning models using MLflow and exposes them as REST API endpoints. This functionality uses serverless compute, which means that the endpoints and associated compute resources are managed and run in the Databricks cloud account. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 R,R-01,R-01-06,Use managed services for your workloads,Databricks Platform,"Leverage managed services of the Databricks Data Intelligence Platform like serverless compute, model serving, or Delta Live Tables where possible. These services are - without extra effort by the customer - operated by Databricks in a reliable and scalable way, making workloads more reliable.
 
-AWS | Azure | GCP
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+
+"
 R,R-02,R-02-01,Use a layered storage architecture,Databricks Lakehouse Architecture,"Curate data by creating a layered architecture and ensuring data quality increases as data moves through the layers. A common layering approach is:
 
 Raw layer (bronze): Source data gets ingested into the lakehouse into the first layer and should be persisted there. When all downstream data is created from the raw layer, rebuilding the subsequent layers from this layer is possible if needed.
@@ -538,22 +538,22 @@ Curated layer (silver): The purpose of the second layer is to hold cleansed, ref
 Final layer (gold): The third layer is created around business or project needs. It provides a different view as data products to other business units or projects, preparing data around security needs (such as anonymized data) or optimizing for performance (such as with pre aggregated views). The data products in this layer are seen as the truth for the business.
 
 The final layer should only contain high-quality data and can be fully trusted from a business point of view.
-AWS | Azure | GCP"
+"
 R,R-02,R-02-02,Improve data integrity by reducing data redundancy,Databricks Platform,"Copying or duplicating data creates data redundancy and will lead to lost integrity, lost data lineage, and often different access permissions. This will decrease the quality of the data in the lakehouse. A temporary or throwaway copy of data is not harmful on its own - it is sometimes necessary for boosting agility, experimentation and innovation. However, if these copies become operational and regularly used for business decisions, they become data silos. These data silos getting out of sync has a significant negative impact on data integrity and quality, raising questions such as “Which data set is the master?” or “Is the data set up to date?”.
 
-AWS | Azure | GCP"
+"
 R,R-02,R-02-03,Actively manage schemas,Unity Catalog,"Uncontrolled schema changes can lead to invalid data and failing jobs that use these data sets. Databricks has several methods to validate and enforce the schema:
 
 Delta Lake supports schema validation and schema enforcement by automatically handling schema variations to prevent the insertion of bad records during ingestion.
 
 Auto Loader detects the addition of new columns as it processes your data. By default, the addition of a new column causes your streams to stop with an UnknownFieldException. Auto Loader supports several modes for schema evolution. 
 
-AWS | Azure | GCP"
+"
 R,R-02,R-02-04,Use constraints and data expectations,Delta Live Tables,"Delta tables support standard SQL constraint management clauses that ensure that the quality and integrity of data added to a table are automatically verified. When a constraint is violated, Delta Lake throws an InvariantViolationException error to signal that the new data can’t be added. See Constraints on Databricks.
 
 To further improve this handling, Delta Live Tables supports Expectations: Expectations define data quality constraints on the contents of a data set. An expectation consists of a description, an invariant, and an action to take when a record fails the invariant. Expectations to queries use Python decorators or SQL constraint clauses. See Manage data quality with Delta Live Tables. 
 
-AWS | Azure | GCP"
+"
 R,R-02,R-02-05,Take a data-centric approach to machine learning,Databricks Platform,"One guiding principle that continues to lie at the heart of the AI vision for the Databricks Data Intelligence Platform is taking a data-centric approach to machine learning. With the increasing prevalence of generative AI, this perspective remains just as important. The core constituents of any ML project can be viewed simply as data pipelines 
 
 Feature engineering, training, inference, and monitoring pipelines are data pipelines. They must be as robust as other production data engineering processes. Data quality is crucial in any ML application, so ML data pipelines should employ systematic approaches to monitoring and mitigating data quality issues. Avoid tools that make it challenging to join data from ML predictions, model monitoring, and so on, with the rest of your data. The simplest way to achieve this is to develop ML applications on the same platform used to manage production data. For example, instead of downloading training data to a laptop, where it is hard to govern and reproduce results, secure the data in cloud storage and make that storage available to your training process. 
@@ -563,38 +563,38 @@ R,R-03,R-03-01,Enable autoscaling for ETL workloads,Databricks Workflows,"Autosc
 
 For streaming workloads, Databricks recommends using Delta Live Tables with autoscaling. See Use autoscaling to increase efficiency and reduce resource usage. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 R,R-03,R-03-02,Use autoscaling for SQL Warehouses,Databricks SQL,"The scaling parameter of a SQL warehouse sets the minimum and the maximum number of clusters over which queries sent to the warehouse are distributed. The default is a minimum of one and a maximum of one cluster.
 
 To handle more concurrent users for a given warehouse, increase the cluster count. To learn how Databricks adds clusters to and removes clusters from a warehouse, see SQL warehouse sizing, scaling, and queuing behavior. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP
+
+
 
 Databricks enhanced autoscaling optimizes cluster utilization by automatically allocating cluster resources based on workload volume, with minimal impact on the data processing latency of your pipelines. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 R,R-04,R-04-01,Recover from Structured Streaming query failures,Structured Streaming,"Structured Streaming provides fault-tolerance and data consistency for streaming queries. Using Databricks workflows, you can easily configure your Structured Streaming queries to restart on failure automatically. The restarted query continues where the failed one left off. 
 
-AWS | Azure | GCP"
+"
 R,R-04,R-04-02,Recover ETL jobs using data time travel capabilities,Delta Lake - Delta Time Travel,"Despite thorough testing, a job in production can fail or produce some unexpected, even invalid, data. Sometimes this can be fixed with an additional job after understanding the source of the issue and fixing the pipeline that led to the issue in the first place. However, often this is not straightforward, and the respective job should be rolled back. Using Delta Time travel allows users to easily roll back changes to an older version or timestamp, repair the pipeline, and restart the fixed pipeline. See What is Delta Lake time travel?.
 
 A convenient way to do so is the RESTORE command. 
 
-AWS | Azure | GCP
+
 Blog"
 R,R-04,R-04-03,Leverage a job automation framework with built-in recovery,Databricks Workflows,"Databricks Workflows are built for recovery. When a task in a multi-task job fails (and, as such, all dependent tasks), Databricks Workflows provide a matrix view of the runs, which lets you examine the issue that led to the failure. See View runs for a job. Whether it was a short network issue or a real issue in the data, you can fix it and start a repair run in Databricks Workflows. It runs only the failed and dependent tasks and keep the successful results from the earlier run, saving time and money. 
 
-AWS | Azure | GCP"
+"
 R,R-04,R-04-04,Configure a disaster recovery pattern,,"Databricks is often a core part of an overall data ecosystem that includes many services, including upstream data ingestion services (batch/streaming), cloud-native storage, downstream tools and services such as business intelligence apps, and orchestration tooling. Some of your use cases might be particularly sensitive to a regional service-wide outage.
 
 Disaster recovery involves a set of policies, tools, and procedures that enable the recovery or continuation of vital technology infrastructure and systems following a natural or human-induced disaster. A large cloud service like Azure, AWS, or GCP serves many customers and has built-in guards against a single failure. For example, a region is a group of buildings connected to different power sources to guarantee that a single power loss will not shut down a region. However, cloud region failures can happen, and the degree of disruption and its impact on your organization can vary.
 
 Essential parts of a disaster recovery strategy are selecting a strategy (active/active or active/passive), selecting the right toolset, and testing both failover and restore. 
 
-AWS | Azure | GCP"
+"
 R,R-05,R-05-01,Monitor data platform events,,Monitor Data platform and ML events
 R,R-05,R-05-02,Monitor cloud events,,Monitor events on your cloud provider
 PE,PE-01,PE-01-01,Use serverless architecture,Databricks Serverless Compute,"With the serverless compute on the Databricks Data Intelligence Platform, the compute layer runs in the customer’s Databricks account. Workspace admins can create serverless SQL warehouses that enable instant compute and are managed by Databricks. A serverless SQL warehouse uses compute clusters hosted in the Databricks customer account. Use them with Databricks SQL queries just like you usually would with the original Databricks SQL warehouses. Serverless compute comes with a very fast starting time for SQL warehouses (10s and below), and the infrastructure is managed by Databricks.
@@ -607,19 +607,19 @@ Users benefit from near-zero waiting times for cluster start and improved concur
 
 Cloud administrators can refocus their time on higher-value projects instead of managing low-level cloud components. 
 
-AWS | Azure | GCP"
+"
 PE,PE-01,PE-01-02,Use an enterprise grade model serving service,Databricks Model Serving,"Databricks Model Serving provides a unified interface to deploy, govern, and query AI models. Each model you serve is available as a REST API that you can integrate into your web or client application.
 
 Model Serving provides a highly available and low-latency service for deploying models. The service automatically scales up or down to meet demand changes, saving infrastructure costs while optimizing latency performance. This functionality uses serverless compute. 
 
-AWS | Azure | GCP"
+"
 PE,PE-02,PE-02-01,Understand your data ingestion and access patterns,,"From a performance perspective, data access patterns - such as “aggregations versus point access” or “scan versus search” - behave differently depending on the data size. Large files are more efficient for scan queries and smaller files better for search since you have to read fewer data to find the specific row(s).
 
 For ingestion patterns, it’s common to use DML statements. DML statements are most performant when the data is clustered, and you can simply isolate the section of data. Keeping the data clustered and isolatable on ingestion is important: Consider keeping a natural time sort order and apply as many filters as possible to the ingest target table. For append-only and overwrite ingestion workloads, there isn't much to consider, as this is a relatively cheap operation.
 
 The ingestion and access patterns often point to an obvious data layout and clustering. If they do not, decide what is more important to your business and skew toward how to solve that goal better. 
 
-AWS | Azure | GCP"
+"
 PE,PE-02,PE-02-02,Use parallel computation where it is beneficial,Apache Spark,"Time to value is an important dimension when working with data. While many use cases can be easily implemented on a single machine (small data, few and simple computation steps), often use cases come up that:
 
 Need to process large data sets.
@@ -631,19 +631,19 @@ Must be repeated 100s and 1000s of times.
 The cluster environment of the Databricks platform is a great environment to distribute these workloads efficiently. It automatically parallelism SQL queries across all nodes of a cluster and it provides libraries for Python and Scala to do the same. Under the hood, the engines Apache Spark and Photon analyze the queries, determine the optimal way of parallel execution, and manage the distributed execution in a resilient way.
 Here are some parallel procesing capabilities in databricks that works with apache sparrk
 
-AWS | Azure | GCP
-AWS | Azure | GCP
-AWS | Azure | GCP
+
+
+
 MLlib
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 PE,PE-02,PE-02-03,Analyze the whole chain of execution,Workflows; Unity Catalog,"Most pipelines or consumption patterns use a chain of systems. For example, for BI tools the performance is impacted by several factors:
 The BI tool itself.
 The connector that connects the BI tool and the SQL engine.
 The SQL engine where the BI tool sends the query.
 For best-in-class performance, the whole chain needs to be taken into account and selected/tuned for best performance. 
 
-AWS | Azure | GCP"
+"
 PE,PE-02,PE-02-04,Prefer larger clusters,Databricks Cluster Configuration,"Plan for larger clusters, especially when the workload scales linearly. In that case, it is not more expensive to use a large cluster for a workload than to use a smaller one. It’s just faster. The key is that you're renting the cluster for the length of the workload. So, if you spin up two worker clusters and it takes an hour, you're paying for those workers for the full hour. Similarly, if you spin up a four-worker cluster and it takes only half an hour (here comes the linear scalability into play), the costs are the same. If costs are the primary driver with a very flexible SLA, an autoscaling cluster is almost always going to be the cheapest but not necessarily the fastest. "
 PE,PE-02,PE-02-05,Use native Spark operations,Apache Spark,"User Defined Functions (UDFs) are a great way to extend the functionality of Spark SQL. However, don’t use Python or Scala UDFs if a native function exists:
 Spark SQL
@@ -655,56 +655,56 @@ Higher efforts for implementing and testing functionality already existing in th
 
 If native functions are missing and should be implemented as Python UDFs, use Pandas UDFs. Apache Arrow ensures data moves efficiently back and forth between Spark and Python.
 
-AWS | Azure | GCP
+
 Apache Arrow "
 PE,PE-02,PE-02-06,Use native platform engines,Photon,"Photon is the engine on Databricks that provides fast query performance at low cost – from data ingestion, ETL, streaming, data science, and interactive queries – directly on your data lake. Photon is compatible with Apache Spark APIs, so getting started is as easy as turning it on – no code changes and no lock-in.
 
 Photon is part of a high-performance runtime that runs your existing SQL and DataFrame API calls faster and reduces your total cost per workload. Photon is used by default in Databricks SQL warehouses. 
 Photon is available by default for all Databricks SQL Warehouse Types
 
-AWS | Azure | GCP"
+"
 PE,PE-02,PE-02-07,Understand your hardware and workload type,Databricks Cluster Configuration,"Not all cloud VMs are created equally. The different families of machines offered by cloud providers are all different enough to matter. There are obvious differences - RAM and cores - and more subtle differences - processor type and generation, network bandwidth guarantees, and local high-speed storage versus local disk versus remote disk. There are also differences in the “spot” markets. These should be understood before deciding on the best VM type for your workload. 
 
-AWS | Azure | GCP
+
 
 Please note - Serverless compute manages clusters automatically, so this is not needed for serverless compute."
 PE,PE-02,PE-02-08,Use caching,Databricks Cluster Configuration,"There are two types of caching available in Databricks: Delta caching and Spark caching. 
 Use Disk Cache and Avoid Spark Caching
-AWS | Azure | GCP
+
 Spark performance tuning
 
 Additional Cache Types: 
-Query Result Cache - AWS | Azure | GCP 
-Databricks SQL UI caching - AWS | Azure | GCP  
+Query Result Cache -  
+Databricks SQL UI caching -   
 Prewarm Delta cache for BI workloads
 
 Prewarm clusters (Serverless compute manages clusters automatically, so this is not needed for serverless compute.)
-AWS | Azure | GCP"
+"
 PE,PE-02,PE-02-09,Use compaction,Optimize with ZOrder,"Delta Lake on Databricks can improve the speed of reading queries from a table. One way to improve this speed is to coalesce small files into larger ones. You trigger compaction by running the OPTIMIZE command. See Compact data files with optimize on Delta Lake.
 
 You can also compact small files automatically using Auto Optimize. See Consider file size tuning. 
 
-AWS | Azure | GCP"
+"
 PE,PE-02,PE-02-10,Use data skipping,Optimize with ZOrder,"Data skipping: To achieve this, data skipping information is collected automatically when you write data into a Delta table (by default Delta Lake on Databricks collects statistics on the first 32 columns defined in your table schema). Delta Lake on Databricks takes advantage of this information (minimum and maximum values) at query time to provide faster queries. See Data skipping for Delta Lake.
 
 For best results, apply Z-ordering, a technique to collocate related information in the same set of files. This co-locality is automatically used on Databricks by Delta Lake data-skipping algorithms. This behavior dramatically reduces the amount of data Delta Lake on Databricks needs to read.
 
 Dynamic file pruning: Dynamic file pruning (DFP) can significantly improve the performance of many queries on Delta tables. DFP is especially efficient for non-partitioned tables or joins on non-partitioned columns. 
-AWS | Azure | GCP
-AWS | Azure | GCP
-AWS | Azure | GCP
+
+
+
 Delta Lake liquid clustering replaces table partitioning and ZORDER to simplify data layout decisions and optimize query performance. Liquid clustering provides flexibility to redefine clustering keys without rewriting existing data, allowing data layout to evolve alongside analytic needs over time.
 
-AWS | Azure | GCP"
+"
 PE,PE-02,PE-02-11,Enable Predictive Optimization on your metastore,Predictive Optimization,"Predictive optimization removes the need to manually manage maintenance operations for Delta tables on Databricks.
 
 With predictive optimization enabled, Databricks automatically identifies tables that would benefit from maintenance operations and runs them for the user. Maintenance operations are only run as necessary, eliminating both unnecessary runs for maintenance operations and the burden associated with tracking and troubleshooting performance.
 
-AWS | Azure | GCP"
+"
 PE,PE-02,PE-02-12,Avoid over-partitioning,Partitioning,"In the past, partitioning was the most common way to skip data. However, partitioning is static and manifests as a file system hierarchy. There is no easy way to change partitions if the access patterns change over time. Often, partitioning leads to over-partitioning - in other words, too many partitions with too small files, which results in bad query performance. See Partitions.
 
 In the meantime, a much better choice than partitioning is Z-ordering.
-AWS | Azure | GCP"
+"
 PE,PE-02,PE-02-14,Consider file size tuning,Auto Optimize,"The term auto optimize is sometimes used to describe functionality controlled by the settings delta.autoCompact and delta.optimizeWrite. This term has been retired in favor of describing each setting individually. See Configure Delta Lake to control data file size.
 
 Auto Optimize is particularly useful in the following scenarios:
@@ -712,14 +712,14 @@ Streaming use cases where latency in the order of minutes is acceptable.
 MERGE INTO is the preferred method of writing into Delta Lake.
 CREATE TABLE AS SELECT or INSERT INTO are commonly used operations. 
 
-AWS | Azure | GCP"
+"
 PE,PE-02,PE-02-15,Optimize join performance,Databricks Adaptive Query Execution,"A range join occurs when two relations are joined using a point in interval or interval overlap condition. The range join optimization support in Databricks Runtime can bring orders of magnitude improvement in query performance but requires careful manual tuning 
 
-AWS | Azure | GCP
+
 
 Data skew is a condition in which a table’s data is unevenly distributed among partitions in the cluster. Data skew can severely downgrade the performance of queries, especially those with joins. Joins between big tables require shuffling data, and the skew can lead to an extreme imbalance of work in the cluster. 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 PE,PE-02,PE-02-16,Run analyze table to collect table statistics,Analyze Table,"Run analyze table to collect statistics on the entire table for the query plan
 This information is persisted in the metastore and helps the query optimizer by:
 
@@ -728,7 +728,7 @@ Selecting the correct build side in a hash-join.
 Calibrating the join order in a multi-way join.
 
 It should be run alongside OPTIMIZE on a daily basis and is recommended on tables < 5TB. The only caveat is that analyze table is not incremental.
-AWS | Azure | GCP"
+"
 PE,PE-03,PE-03-01,Test on data representative of production data,,"Run performance testing on production data (read-only) or similar data. When using similar data, characteristics like volume, file layout, and data skews should be like production data, since this has a significant impact on performance."
 PE,PE-03,PE-03-02,Take prewarming of resources into account,Databricks Pools,"Take prewarming of resources into account
 The first query on a new cluster is slower than all the others:
@@ -739,7 +739,7 @@ When caching is part of the setup, the first run ensures that the data is in the
 
 Prewarming resources - running specific queries for the sake of initializing resources and filling caches (for example, after a cluster restart) - can significantly increase the performance of the first queries. So, to understand the behavior for the different scenarios, test the performance of the first execution (with and without prewarming) and subsequent executions.
 
-AWS | Azure | GCP"
+"
 PE,PE-03,PE-03-03,Identify bottlenecks,,Bottlenecks are areas in your workload that might worsen the overall performance when the load in production increases. Identifying these at design time and testing against higher workloads will help to keep the workloads stable in production.
 PE,PE-04,PE-04-01,Monitor query performanance,,"Query Profile: Utilize the query profile feature to troubleshoot performance bottlenecks during a query's execution. It provides visualization of each query task and related metrics such as time spent, number of rows processed, and memory consumption
 
@@ -751,18 +751,18 @@ Blog"
 CO,CO-01,CO-01-02,Use job clusters,Databricks Workflows,"A job is a way to run non-interactive code in a Databricks cluster. For example, you can run an extract, transform, and load (ETL) workload interactively or on a schedule. Of course, you can also run jobs interactively in the notebook UI. However, on job clusters, the non-interactive workloads will cost significantly less than on all-purpose clusters.
 An additional advantage is that every job or workflow runs on a new cluster, isolating workloads from one another.
 
-AWS | Azure | GCP
+
 Pricing"
 CO,CO-01,CO-01-03,Use SQL warehouse for SQL workloads,Databricks Serverless SQL,"For interactive SQL workloads, a Databricks SQL warehouse is the most cost-efficient engine 
 
-AWS | Azure | GCP"
+"
 CO,CO-01,CO-01-04,Use up-to-date runtimes for your workloads,Databricks Cluster Configuration,"The Databricks platform provides different runtimes that are optimized for data engineering tasks (Databricks Runtime) or for Machine Learning (Databricks Runtime for Machine Learning). The runtimes are built to provide the best selection of libraries for the tasks and ensure that all provided libraries are up-to-date and work together optimally. Databricks Runtime is released on a regular cadence and offers performance improvements between major releases. These improvements in performance often lead to cost savings due to more efficient usage of cluster resources.
 
-AWS | Azure | GCP"
+"
 CO,CO-01,CO-01-05,Only use GPUs for the right workloads,Databricks Cluster Configuration,"Virtual machines with GPUs can dramatically speed up computational processes for deep learning, but have a significantly higher price than CPU-only machines. Use GPU instances only for workloads that have GPU-accelerated libraries.
 Most workloads do not use GPU-accelerated libraries do not benefit from GPU-enabled instances. Workspace admins can restrict GPU machines and clusters to prevent unnecessary use. 
 
-AWS | Azure | GCP
+
 Blog"
 CO,CO-01,CO-01-06,Use Serverless for your workloads,Databricks Serverless,"BI workloads typically use data in bursts and generate multiple concurrent queries. For example, someone using a BI tool might update a dashboard, write a query, or simply analyze query results without interacting further with the platform. This example demonstrates two requirements:
 
@@ -772,14 +772,14 @@ Have compute resources available quickly (for both start-up and scale-up) to sat
 Serverless SQL warehouses start and scale up in seconds, so both immediate availability and termination during idle times can be achieved. This results in a great user experience and overall cost savings.
 Additionally, serverless SQL warehouses scale down earlier than non-serverless warehouses, resulting lower costs. 
 
-AWS | Azure | GCP
+
 
 
 Databricks Model Serving provides a unified interface to deploy, govern, and query AI models. Each model you serve is available as a REST API that you can integrate into your web or client application.
 
 Model Serving provides a highly available and low-latency service for deploying models. The service automatically scales up or down to meet demand changes, saving infrastructure costs while optimizing latency performance. This functionality uses serverless compute. 
 
-AWS | Azure | GCP"
+"
 CO,CO-01,CO-01-07,Use the right instance type,Databricks Cluster Configuration,"Based on your workloads, it is also important to choose the right instance family to get the best performance/price ratio. Some simple rules of thumb are:
 Use Instance Fleet (AWS)
 Memory optimized for ML, heavy shuffle & spill workloads
@@ -789,27 +789,27 @@ GPU optimized for specific ML & DL workloads
 General purpose in absence of specific requirements"
 CO,CO-01,CO-01-08,Choose the most efficient cluster size,Databricks Cluster Configuration,"Number of workers, instance type and size are important factors for compute configurations. Along with those when sizing compute, consider the data consumed, computational complexity, data partitioning, and parallelism required. For simple ETL workloads, focus on compute-optimized configurations, while memory and storage are important for shuffle-heavy workloads. Balancing the number of workers and instance size is crucial, as both can affect network I/O. Lastly, consider caching benefits for workloads that require frequent re-reads of the same data, using storage-optimized configurations with Delta Cache. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 CO,CO-01,CO-01-09,Evaluate performance optimized query engines,Databricks Cluster Configuration,"Photon is a high-performance Databricks-native vectorized query engine that speeds up your SQL workloads and DataFrame API calls (for data ingestion, ETL, streaming, data science, and interactive queries). Photon is compatible with Apache Spark APIs, so getting started is as easy as turning it on – no code changes and no lock-in.
 The observed speedup can lead to significant cost savings, and jobs that run regularly should be evaluated to see whether they are not only faster but also cheaper with Photon."
 CO,CO-02,CO-02-01,Leverage auto-scaling compute,Databricks Cluster Configuration,"Autoscaling allows your workloads to use the right amount of compute required to complete your jobs.
 
 Enable autoscaling for batch workloads.
 Enable autoscaling for SQL warehouse.
-AWS | Azure | GCP
+
 
 Compute auto-scaling has limitations scaling down cluster size for Structured Streaming workloads. Databricks recommends using Delta Live Tables with Enhanced Autoscaling for streaming workloads.
 Use Delta Live Tables Enhanced Autoscaling.
-AWS | Azure | GCP"
+"
 CO,CO-02,CO-02-02,Use auto termination,Databricks Cluster Configuration,"Databricks provides a number of features to help control costs by reducing idle resources and controlling when compute resources can be deployed.
 Configure auto termination for all interactive clusters. After a specified idle time, the cluster shuts down. See Automatic termination.
 
 If a starting time that is significantly shorter than a full cluster start would be acceptable, consider using cluster pools. See Pool best practices. Databricks pools reduce cluster start and auto-scaling times by maintaining a set of idle, ready-to-use instances. When a cluster is attached to a pool, cluster nodes are created using the pool’s idle instances. If the pool has no idle instances, the pool expands by allocating a new instance from the instance provider in order to accommodate the cluster’s request. When a cluster releases an instance, it returns to the pool and is free for another cluster to use. Only clusters attached to a pool can use that pool’s idle instances.
 Databricks does not charge DBUs while instances are idle in the pool, resulting in cost savings. Instance provider billing does apply. 
 
-AWS | Azure | GCP
-AWS | Azure | GCP"
+
+"
 CO,CO-02,CO-02-03,Use compute policies to control costs,Databricks Cluster Policies,"Cluster policies can enforce many cost specific restrictions for clusters. See Operational Excellence - Use cluster policies. For example:
 
 Enable cluster autoscaling with a set minimum number of worker nodes.
@@ -817,24 +817,24 @@ Enable cluster auto termination with a reasonable value (for example, 1 hour) to
 Ensure that only cost-efficient VM instances can be selected. Follow the best practices for cluster configuration. See Compute configuration best practices.
 Apply a spot instance strategy.
 
-AWS | Azure | GCP"
+"
 CO,CO-03,CO-03-01,Monitor costs,Unity Catalog,"The account console allows viewing the billable usage. As a Databricks account owner or account admin, you can also use the account console to download billable usage logs. Databricks system tables provide detailed usage details with system tables you can use these to monitor usage.
 
 As a best practice, the full costs (including VMs, storage, and network infrastructure) should be monitored. This can be achieved by cloud provider cost management tools or by adding third party tools.
 
-AWS | Azure | GCP"
+"
 CO,CO-03,CO-03-02,Tag clusters for cost attribution,Databricks Cluster Configuration,"To monitor cost and accurately attribute Databricks usage to your organization’s business units and teams (for example, for chargebacks), you can tag clusters and pools. These tags propagate to detailed DBU usage reports and to cloud provider VMs and blob storage instances for cost analysis.
 
 Ensure that cost control and attribution are already in mind when setting up workspaces and clusters for teams and use cases. This streamlines tagging and improves the accuracy of cost attributions.
 
 For the overall costs, DBU virtual machine, disk, and any associated network costs must be considered. For serverless SQL warehouses this is simpler since the DBU costs already include virtual machine and disk costs.
 
-AWS | Azure | GCP"
+"
 CO,CO-03,CO-03-03,Implement observability to track & chargeback cost,Databricks Cluster Configuration,"When working with complex technical ecosystems, proactively understanding the unknowns is key to maintaining platform stability and controlling costs. Observability provides a way to analyze and optimize systems based on the data they generate. This is different from monitoring, which focuses on identifying new patterns rather than tracking known issues.
 Databricks provide great observability capabilities using System tables that are Databricks-hosted analytical stores of a customer account’s operational data found in the system catalog. They provide historical observability across the account and include user-friendly tabular information on platform telemetry."
 CO,CO-03,CO-03-04,Share cost reports regularly,Unity Catalog - System Tables,"Create cost reports every month to track growth and anomalies in consumption. Share these reports broken down to use cases or teams with the teams that own the respective workloads by using cluster tagging. This avoids surprises and allows teams to proactively adapt their workloads if costs get too high.
 
-Use the account console to get high level usage - AWS | Azure | GCP
+Use the account console to get high level usage - 
 
 Databricks recommends using Unity Catalog system tables to generate detailed usage reports (by usage tags, etc) for enhanced cost reporting."
 CO,CO-03,CO-03-05,Monitor and manage Delta Sharing egress costs,System Tables,"Unlike other data sharing platforms, Delta Sharing does not require data replication. This model has many advantages, but it means that your cloud vendor may charge data egress fees when you share data across clouds or regions. See Monitor and manage Delta Sharing egress costs (for providers) to monitor and manage egress charges."
@@ -842,7 +842,7 @@ CO,CO-04,CO-04-01,Balance always-on and triggered streaming,Databricks Streaming
 
 However, not every use case that is based on a continuous stream of events needs these events to be added to the analytics data set immediately. If the business requirement for the use case only needs fresh data every few hours or every day, then this requirement can be achieved with only several runs a day, leading to a significant cost reduction for the workload. Databricks recommends using Structured Streaming with trigger AvailableNow for incremental workloads that do not have low latency requirements. See Configuring incremental batch processing.
 
-AWS | Azure | GCP"
+"
 CO,CO-04,CO-04-02,Balance between on-demand and capacity excess instances,Databricks Cluster Configuration,"Spot instances use cloud virtual machine excess resources that are available at a cheaper price. To save cost, Databricks supports creating clusters using spot instances. It is recommended to always have the first instance (Spark driver) as an on-demand virtual machine. Spot instances are a great selection for workloads when it is acceptable to take longer because one or more spot instances have been evicted by the cloud provider. 
 
-AWS | Azure | GCP"
+"

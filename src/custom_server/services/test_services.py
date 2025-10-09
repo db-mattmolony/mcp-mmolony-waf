@@ -45,15 +45,17 @@ def test_query_formatter():
     print("\nTesting Query Formatter:")
     print("=" * 50)
     
-    # Test with mock data
+    # Test with mock data using the general formatter
     mock_table_data = [("DELTA", 150), ("PARQUET", 75), ("JSON", 25)]
-    result = QueryFormatter.format_table_formats(mock_table_data)
-    print("Table formats formatter test:")
+    mock_column_names = ["table_format", "table_count"]
+    result = QueryFormatter.format_default(mock_table_data, mock_column_names)
+    print("General formatter test with column headers:")
     print(result)
     
     mock_percentage_data = [("MANAGED", 85), ("EXTERNAL", 15)]
-    result = QueryFormatter.format_table_types_distribution(mock_percentage_data)
-    print("\nTable types distribution formatter test:")
+    mock_column_names2 = ["table_type", "percentage"]
+    result = QueryFormatter.format_default(mock_percentage_data, mock_column_names2)
+    print("\nGeneral formatter test with different data:")
     print(result)
 
 def demonstrate_service_usage():
@@ -72,13 +74,13 @@ def demonstrate_service_usage():
     print("\nAfter (new service layer):")
     print("def COST_OPTIMISATION_C0_01_01_TABLE_TYPES():")
     print("    query = query_repo.get_query('CO-01-01-table-formats')")
-    print("    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_table_formats)")
+    print("    return sql_service.execute_query_with_formatting(query)")
     print()
     print("Benefits:")
-    print("- 3 lines instead of 30+")
+    print("- 2 lines instead of 30+")
     print("- Clean separation of concerns")
     print("- Centralized query management")
-    print("- Reusable formatters")
+    print("- General formatter with column headers")
     print("- Easy to test and maintain")
 
 if __name__ == "__main__":

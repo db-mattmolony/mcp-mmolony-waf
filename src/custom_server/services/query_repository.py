@@ -25,13 +25,13 @@ class QueryRepository:
             """,
             
             "CO-01-01-managed-tables": """
-                SELECT 
-                table_type,
-                round(count(table_type)/(select count(*) from system.information_schema.tables) * 100) as percent_of_tables
-                FROM system.information_schema.tables
-                group by ALL
-                having percent_of_tables > 0
-                order by percent_of_tables desc
+            SELECT 
+            table_type,
+            round(count(table_type)/(select count(*) from system.information_schema.tables) * 100) as percent_of_tables
+            FROM system.information_schema.tables
+            group by ALL
+            having percent_of_tables > 0
+            order by percent_of_tables desc
             """,
             
             "CO-01-02": """

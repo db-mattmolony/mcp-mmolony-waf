@@ -12,6 +12,7 @@ class WAFPillar:
     """Represents a WAF pillar."""
     pillar_id: str
     pillar_name: str
+    pillar_description: str
 
 
 @dataclass
@@ -34,13 +35,29 @@ class WAFMeasure:
     details: str
 
 
+@dataclass
+class WAFAnalysis:
+    """Represents a WAF analysis query for a measure."""
+    pillar_id: str
+    principle_id: str
+    measure_id: str
+    analysis_id: str
+    sql_code: str
+    sql_description: str
+
+
 class WAFHierarchyService:
-    """Service for managing hierarchical WAF data (Pillars → Principles → Measures)."""
+    """Service for managing hierarchical WAF data (Pillars → Principles → Measures → Analyses)."""
     
     def __init__(self):
         self._pillars: Dict[str, WAFPillar] = {}
         self._principles: Dict[str, WAFPrinciple] = {}
         self._measures: Dict[str, WAFMeasure] = {}
+        self._analyses: Dict[str, List[WAFAnalysis]] = {}  # Key: measure_id, Value: List of analyses
+        # Indexes for faster lookups
+        self._measures_by_principle: Dict[str, List[WAFMeasure]] = {}
+        self._measures_by_pillar: Dict[str, List[WAFMeasure]] = {}
+        self._principles_by_pillar: Dict[str, List[WAFPrinciple]] = {}
         self._load_waf_data()
     
     def _get_csv_path(self, filename: str) -> Path:
@@ -70,7 +87,8 @@ class WAFHierarchyService:
                     if pillar_id and pillar_id not in pillar_ids_seen:
                         pillar = WAFPillar(
                             pillar_id=pillar_id,
-                            pillar_name=row['pillar_name'].strip()
+                            pillar_name=row['pillar_name'].strip(),
+                            pillar_description=row.get('pillar_description', '').strip()
                         )
                         self._pillars[pillar_id] = pillar
                         pillar_ids_seen.add(pillar_id)
@@ -100,6 +118,12 @@ class WAFHierarchyService:
                         principle_description=row['principle_description'].strip()
                     )
                     self._principles[principle_id] = principle
+                    
+                    # Build principle index
+                    pillar_id = principle.pillar_id
+                    if pillar_id not in self._principles_by_pillar:
+                        self._principles_by_pillar[pillar_id] = []
+                    self._principles_by_pillar[pillar_id].append(principle)
             
             # Load measures
             measures_path = self._get_csv_path("wafe-life-assessments - measures.csv")
@@ -110,15 +134,53 @@ class WAFHierarchyService:
                     if not row.get('measure_id') or not row['measure_id'].strip():
                         continue
                     measure_id = row['measure_id'].strip()
+                    pillar_id = row['pillar_id'].strip()
+                    principle_id = row['principle_id'].strip()
                     measure = WAFMeasure(
-                        pillar_id=row['pillar_id'].strip(),
-                        principle_id=row['principle_id'].strip(),
+                        pillar_id=pillar_id,
+                        principle_id=principle_id,
                         measure_id=measure_id,
                         best_practice=row['best_practice'].strip(),
                         databricks_capabilities=row['measure_databricks_capabilities'].strip(),
                         details=row['measure_details'].strip()
                     )
                     self._measures[measure_id] = measure
+                    
+                    # Build measure indexes
+                    if principle_id not in self._measures_by_principle:
+                        self._measures_by_principle[principle_id] = []
+                    self._measures_by_principle[principle_id].append(measure)
+                    
+                    if pillar_id not in self._measures_by_pillar:
+                        self._measures_by_pillar[pillar_id] = []
+                    self._measures_by_pillar[pillar_id].append(measure)
+            
+            # Load analyses
+            analyses_path = self._get_csv_path("wafe-life-assessments - analysis.csv")
+            with open(analyses_path, 'r', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    # Skip empty rows or rows without analysis_id or sql_code
+                    analysis_id = row.get('alaysis_id', '').strip().upper()  # Note: typo in CSV header, uppercase it
+                    sql_code = row.get('measure_sql_code', '').strip()
+                    
+                    if not analysis_id or not sql_code:
+                        continue
+                    
+                    measure_id = row['measure_id'].strip().upper()
+                    analysis = WAFAnalysis(
+                        pillar_id=row['pillar_id'].strip().upper(),
+                        principle_id=row['principle_id'].strip().upper(),
+                        measure_id=measure_id,
+                        analysis_id=analysis_id,
+                        sql_code=sql_code,
+                        sql_description=row.get('measure_sql_description', '').strip()
+                    )
+                    
+                    # Group analyses by measure_id
+                    if measure_id not in self._analyses:
+                        self._analyses[measure_id] = []
+                    self._analyses[measure_id].append(analysis)
                         
         except Exception as e:
             raise RuntimeError(f"Error loading WAF data: {str(e)}")
@@ -144,7 +206,7 @@ class WAFHierarchyService:
     def get_principles_by_pillar(self, pillar_id: str) -> List[WAFPrinciple]:
         """Get all principles for a specific pillar."""
         pillar_id = pillar_id.upper()
-        return [p for p in self._principles.values() if p.pillar_id == pillar_id]
+        return self._principles_by_pillar.get(pillar_id, [])
     
     # Measure methods
     def get_all_measures(self) -> List[WAFMeasure]:
@@ -158,12 +220,26 @@ class WAFHierarchyService:
     def get_measures_by_pillar(self, pillar_id: str) -> List[WAFMeasure]:
         """Get all measures for a specific pillar."""
         pillar_id = pillar_id.upper()
-        return [m for m in self._measures.values() if m.pillar_id == pillar_id]
+        return self._measures_by_pillar.get(pillar_id, [])
     
     def get_measures_by_principle(self, principle_id: str) -> List[WAFMeasure]:
         """Get all measures for a specific principle."""
         principle_id = principle_id.upper()
-        return [m for m in self._measures.values() if m.principle_id == principle_id]
+        return self._measures_by_principle.get(principle_id, [])
+    
+    # Analysis methods
+    def get_analyses_for_measure(self, measure_id: str) -> List[WAFAnalysis]:
+        """Get all analyses for a specific measure."""
+        return self._analyses.get(measure_id.upper(), [])
+    
+    def get_analysis(self, analysis_id: str) -> Optional[WAFAnalysis]:
+        """Get a specific analysis by ID."""
+        analysis_id = analysis_id.upper()
+        for analyses in self._analyses.values():
+            for analysis in analyses:
+                if analysis.analysis_id == analysis_id:
+                    return analysis
+        return None
     
     # Search methods
     def search_measures(self, search_term: str) -> List[WAFMeasure]:
@@ -195,11 +271,23 @@ class WAFHierarchyService:
     # Statistics methods
     def get_stats(self) -> Dict[str, int]:
         """Get WAF hierarchy statistics."""
+        total_analyses = sum(len(analyses) for analyses in self._analyses.values())
         return {
             'total_pillars': len(self._pillars),
             'total_principles': len(self._principles),
-            'total_measures': len(self._measures)
+            'total_measures': len(self._measures),
+            'total_analyses': total_analyses
         }
+    
+    def get_measures_with_analyses(self) -> List[WAFMeasure]:
+        """Get all measures that have analysis queries."""
+        measures_with_analyses = []
+        for measure_id, analyses in self._analyses.items():
+            if analyses:
+                measure = self.get_measure(measure_id)
+                if measure:
+                    measures_with_analyses.append(measure)
+        return sorted(measures_with_analyses, key=lambda m: m.measure_id)
 
 
 # Global instance

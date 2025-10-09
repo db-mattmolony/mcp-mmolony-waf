@@ -10,7 +10,7 @@ from .services.waf_hierarchy_service import get_waf_hierarchy_service
 import os
 from dotenv import load_dotenv
 from fastapi import Header
-from typing import Optional
+from typing import Optional, Annotated
 from pydantic import Field
 
 
@@ -22,9 +22,40 @@ cfg = Config()
 user_token = Header(None, alias="X-Forwarded-Access-Token")
 
 # Initialize services
-sql_service = get_sql_service()
-query_repo = get_query_repository()
-waf_service = get_waf_hierarchy_service()
+print("🔧 Starting service initialization...")
+
+try:
+    print("🔍 Initializing SQL service...")
+    sql_service = get_sql_service()
+    print("✓ SQL service initialized successfully")
+except Exception as e:
+    print(f"✗ SQL service initialization failed: {e}")
+    print(f"   Error type: {type(e).__name__}")
+    sql_service = None
+
+try:
+    print("🔍 Initializing query repository...")
+    query_repo = get_query_repository()
+    print("✓ Query repository initialized successfully")
+except Exception as e:
+    print(f"✗ Query repository initialization failed: {e}")
+    print(f"   Error type: {type(e).__name__}")
+    query_repo = None
+
+try:
+    print("🔍 Initializing WAF service...")
+    waf_service = get_waf_hierarchy_service()
+    print("✓ WAF service initialized successfully")
+    stats = waf_service.get_stats()
+    print(f"  - Loaded {stats['total_measures']} measures, {stats['total_principles']} principles, {stats['total_pillars']} pillars, {stats['total_analyses']} analyses")
+except Exception as e:
+    print(f"✗ WAF service initialization failed: {e}")
+    print(f"   Error type: {type(e).__name__}")
+    import traceback
+    print(f"   Traceback: {traceback.format_exc()}")
+    waf_service = None
+
+print("🏁 Service initialization complete")
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -35,8 +66,27 @@ mcp = FastMCP("Custom MCP Server on Databricks Apps for creating")
 load_prompts(mcp)
 
 # WAF (Well-Architected Framework) Tools
-@mcp.tool()
-def get_waf_pillar(pillar_id: str) -> str:
+
+# @mcp.tool()
+# def test_simple() -> str:
+#     """
+#     Simple test tool to verify MCP is working.
+    
+#     Returns:
+#         A simple test message.
+#     """
+#     print("🧪 test_simple called")
+#     return "Test successful - MCP framework is working!"
+
+
+
+@mcp.tool(
+    name="get-waf-pillar",
+    description="Retrieve comprehensive information about a specific Databricks Well-Architected Framework pillar, including all its principles and measures. Use this to understand a pillar's scope and navigate to specific principles within it. Examples: 'CO' (Cost Optimization), 'DG' (Data & AI Governance), 'RE' (Reliability)."
+)
+def get_waf_pillar(
+    pillar_id: Annotated[str, Field(description="The WAF pillar ID to retrieve. Examples: 'CO', 'DG', 'RE', 'SE', 'PE', 'OE', 'IU'")]
+) -> str:
     """
     Get information about a specific WAF pillar by ID.
     
@@ -55,8 +105,9 @@ def get_waf_pillar(pillar_id: str) -> str:
     principles = waf_service.get_principles_by_pillar(pillar_id)
     measures = waf_service.get_measures_by_pillar(pillar_id)
     
-    result = f"**WAF Pillar: {pillar.pillar_id}**\n"
+    result = f"# WAF Pillar: {pillar.pillar_id}\n\n"
     result += f"**Name:** {pillar.pillar_name}\n\n"
+    result += f"**Description:** {pillar.pillar_description}\n\n"
     result += f"**Principles:** {len(principles)}\n"
     result += f"**Measures:** {len(measures)}\n\n"
     
@@ -66,80 +117,141 @@ def get_waf_pillar(pillar_id: str) -> str:
             principle_measures = waf_service.get_measures_by_principle(principle.principle_id)
             result += f"- **{principle.principle_id}**: {principle.principle_description} ({len(principle_measures)} measures)\n"
     
-    result += f"\nUse `get_waf_principle(principle_id)` to explore specific principles."
+    result += f"\nUse **Get WAF Principle** to explore specific principles."
     
     return result
 
 
-@mcp.tool()
-def get_waf_principle(principle_id: str) -> str:
+@mcp.tool(
+    name="get-waf-principle",
+    description="Get complete information about a specific WAF principle including all associated measures, their best practices, Databricks capabilities, implementation details, and available analyses. This is the primary tool for understanding what measures exist within a principle and which analyses can be run. Example IDs: 'CO-01' (Choose optimal resources), 'DG-01' (Manage data lifecycle), 'RE-01' (Design for reliability)."
+)
+def get_waf_principle(
+    principle_id: Annotated[str, Field(description="The WAF principle ID to retrieve. Format: '{PILLAR}-{NUMBER}' (e.g., 'CO-01', 'DG-01', 'RE-01')")]
+) -> str:
     """
-    Get information about a specific WAF principle by ID.
+    Get comprehensive information about a specific WAF principle including all measures and analyses.
+    
+    This provides the principle description, all associated measures with their best practices,
+    capabilities, implementation details, and available analyses.
     
     Args:
         principle_id: The WAF principle ID (e.g., 'DG-01', 'CO-01', 'RE-01')
     
     Returns:
-        Principle information with associated measures.
+        Complete principle information with all measures and their available analyses.
     """
     principle = waf_service.get_principle(principle_id)
     
     if not principle:
-        return f"WAF principle '{principle_id}' not found. Use `list_waf_principles()` to see all available principles."
+        return f"WAF principle '{principle_id}' not found. Use **List WAF Principles** to see all available principles."
     
     measures = waf_service.get_measures_by_principle(principle_id)
     
-    result = f"**WAF Principle: {principle.principle_id}**\n"
-    result += f"**Pillar:** {principle.pillar_name}\n"
-    result += f"**Description:** {principle.principle_description}\n\n"
-    result += f"**Measures:** {len(measures)}\n\n"
+    # Build result efficiently using a list
+    parts = [
+        f"# WAF Principle: {principle.principle_id}\n\n",
+        f"**Pillar:** {principle.pillar_name}\n",
+        f"**Description:** {principle.principle_description}\n\n",
+        f"**Total Measures:** {len(measures)}\n\n"
+    ]
     
     if measures:
-        result += "**Measures in this principle:**\n"
+        parts.append("## 📋 Measures\n\n")
         for measure in measures:
-            result += f"- **{measure.measure_id}**: {measure.best_practice}\n"
+            parts.append(f"### {measure.measure_id}: {measure.best_practice}\n\n")
+            
             if measure.databricks_capabilities:
-                result += f"  *Capabilities: {measure.databricks_capabilities}*\n"
+                parts.append(f"**Databricks Capabilities:** {measure.databricks_capabilities}\n\n")
+            
+            parts.append(f"**Details:** {measure.details}\n\n")
+            
+            # Get analyses for this measure
+            analyses = waf_service.get_analyses_for_measure(measure.measure_id)
+            
+            if analyses:
+                parts.append(f"**Available Analyses ({len(analyses)}):**\n")
+                for analysis in analyses:
+                    parts.append(f"- **{analysis.analysis_id}**")
+                    if analysis.sql_description:
+                        parts.append(f": {analysis.sql_description}")
+                    parts.append("\n")
+                parts.append("\n")
+            else:
+                parts.append("*No automated analyses available for this measure.*\n\n")
     
-    result += f"\nUse `get_waf_measure(measure_id)` to get detailed information about any measure."
+    parts.append("Use **Run WAF Analysis** to execute any specific analysis.")
     
-    return result
+    return "".join(parts)
 
 
-@mcp.tool()
-def get_waf_measure(measure_id: str) -> str:
+@mcp.tool(
+    name="run-waf-analysis",
+    description="Execute a specific WAF analysis to evaluate the current state of the Databricks workspace against a best practice measure. This queries system tables and returns actual workspace data (e.g., table formats, cluster configurations, costs). Each analysis has an ID like 'CO-01-01A' or 'CO-01-01B' and tests a specific aspect of a measure. Use get-waf-principle first to see available analysis IDs."
+)
+def run_waf_analysis(
+    analysis_id: Annotated[str, Field(description="The WAF analysis ID to execute. Format: '{PILLAR}-{PRINCIPLE}-{MEASURE}{LETTER}' (e.g., 'CO-01-01A', 'CO-01-01B', 'DG-01-02')")]
+) -> str:
     """
-    Get detailed information about a specific WAF measure by ID.
+    Execute a specific WAF analysis query to evaluate your Databricks workspace.
+    
+    This runs the SQL analysis and returns the results with context about what is being measured
+    and how to interpret the findings in relation to WAF best practices.
     
     Args:
-        measure_id: The WAF measure ID (e.g., 'DG-01-01', 'CO-01-01')
+        analysis_id: The WAF analysis ID (e.g., 'CO-01-01A', 'CO-01-01B', 'CO-03-02A')
     
     Returns:
-        Complete measure details including best practices, Databricks capabilities, and implementation guidance.
+        Analysis results with interpretation and context.
     """
-    measure = waf_service.get_measure(measure_id)
+    print(f"🚀 run_waf_analysis called with analysis_id: {analysis_id}")
     
-    if not measure:
-        return f"WAF measure '{measure_id}' not found. Use `search_waf_measures(search_term)` to find relevant measures."
-    
-    # Get the principle for context
-    principle = waf_service.get_principle(measure.principle_id)
-    principle_desc = principle.principle_description if principle else "Unknown"
-    
-    result = f"**WAF Measure: {measure.measure_id}**\n\n"
-    result += f"**Pillar:** {measure.pillar_id}\n"
-    result += f"**Principle:** {measure.principle_id} - {principle_desc}\n"
-    result += f"**Best Practice:** {measure.best_practice}\n\n"
-    
-    if measure.databricks_capabilities:
-        result += f"**Databricks Capabilities:** {measure.databricks_capabilities}\n\n"
-    
-    result += f"**Implementation Details:**\n{measure.details}"
-    
-    return result
+    try:
+        if waf_service is None:
+            return "Error: WAF service failed to initialize."
+        
+        if sql_service is None:
+            return "Error: SQL service failed to initialize."
+        
+        # Get the analysis
+        analysis = waf_service.get_analysis(analysis_id)
+        
+        if not analysis:
+            return f"WAF analysis '{analysis_id}' not found. Use **Get WAF Principle** to see available analyses for measures."
+        
+        # Build the response
+        result = f"# Analysis {analysis.analysis_id}\n\n"
+        
+        if analysis.sql_description:
+            result += f"**What This Measures:** {analysis.sql_description}\n\n"
+        
+        # Execute the SQL query and return results
+        result += f"## Current Workspace Data\n\n"
+        
+        try:
+            print(f"🔍 Executing analysis {analysis.analysis_id}...")
+            query_result = sql_service.execute_query_with_formatting(analysis.sql_code)
+            print(f"✅ Analysis executed successfully")
+            
+            result += query_result
+            
+        except Exception as e:
+            print(f"❌ Analysis execution failed: {str(e)}")
+            result += f"**Error executing analysis:** {str(e)}\n"
+        
+        return result
+        
+    except Exception as e:
+        print(f"❌ Unexpected error: {str(e)}")
+        import traceback
+        print(f"   Traceback: {traceback.format_exc()}")
+        return f"Error running analysis {analysis_id}: {str(e)}"
 
 
-@mcp.tool()
+@mcp.tool(
+    name="list-waf-pillars",
+    description="List all seven Databricks Well-Architected Framework pillars with a count of their principles and measures. Use this as a starting point to explore the WAF framework structure. Pillars include: Cost Optimization, Data & AI Governance, Reliability, Security, Performance Efficiency, Operational Excellence, and Interoperability & Usability."
+)
 def list_waf_pillars() -> str:
     """
     List all WAF pillars with their principles and measures count.
@@ -157,15 +269,23 @@ def list_waf_pillars() -> str:
         measures = waf_service.get_measures_by_pillar(pillar.pillar_id)
         
         result += f"**{pillar.pillar_id}** - {pillar.pillar_name}\n"
-        result += f"  - {len(principles)} principles, {len(measures)} measures\n\n"
+        # Truncate description to first 150 chars for overview
+        desc_preview = pillar.pillar_description[:150] + "..." if len(pillar.pillar_description) > 150 else pillar.pillar_description
+        result += f"  {desc_preview}\n"
+        result += f"  *{len(principles)} principles, {len(measures)} measures*\n\n"
     
     result += f"**Total:** {stats['total_pillars']} pillars, {stats['total_principles']} principles, {stats['total_measures']} measures\n\n"
-    result += "Use `get_waf_pillar(pillar_id)` to explore any pillar in detail."
+    result += "Use **Get WAF Pillar** to explore any pillar in detail."
+    
+    print("DEBUG: ", result)
     
     return result
 
 
-@mcp.tool()
+@mcp.tool(
+    name="list-waf-principles",
+    description="List all WAF principles organized by pillar, showing their descriptions and measure counts. Use this to understand the architectural guidelines within each pillar and identify which principles to explore in detail. Each principle contains multiple specific measures and analyses."
+)
 def list_waf_principles() -> str:
     """
     List all WAF principles organized by pillar.
@@ -186,205 +306,61 @@ def list_waf_principles() -> str:
             result += f"  - **{principle.principle_id}**: {principle.principle_description} ({len(measures)} measures)\n"
         result += "\n"
     
-    result += "Use `get_waf_principle(principle_id)` to explore any principle in detail."
+    result += "Use **Get WAF Principle** to explore any principle in detail."
     
     return result
 
 
-@mcp.tool()
-def search_waf_measures(search_term: str) -> str:
+@mcp.tool(
+    name="list-waf-measures-with-analyses",
+    description="List all WAF measures that have automated SQL analyses available for workspace evaluation. Shows the specific analysis IDs (e.g., 'CO-01-01A', 'CO-01-01B') that can be executed with run-waf-analysis. Use this to discover which aspects of your workspace can be analyzed programmatically. Currently covers ~10 measures across Cost Optimization and other pillars."
+)
+def list_waf_measures_with_analyses() -> str:
     """
-    Search for WAF measures containing the specified term.
-    
-    Args:
-        search_term: The term to search for (searches in measure ID, best practice, capabilities, and details)
+    List all WAF measures that have associated analyses for data evaluation.
     
     Returns:
-        A list of matching WAF measures with their key information.
+        A list of measures that include automated analyses for assessing your Databricks environment.
     """
-    matches = waf_service.search_measures(search_term)
+    measures_with_analyses = waf_service.get_measures_with_analyses()
     
-    if not matches:
-        return f"No WAF measures found containing '{search_term}'. Use `list_waf_pillars()` to explore available content."
+    if not measures_with_analyses:
+        return "No WAF measures found with automated analyses."
     
-    result = f"**WAF Measures matching '{search_term}' ({len(matches)} found):**\n\n"
+    result = f"**WAF Measures with Automated Analyses ({len(measures_with_analyses)} found):**\n\n"
     
-    for measure in matches[:15]:  # Limit to first 15 results
-        result += f"**{measure.measure_id}** - {measure.best_practice}\n"
-        if measure.databricks_capabilities:
-            result += f"  *Capabilities: {measure.databricks_capabilities}*\n"
+    # Group by pillar for better organization
+    by_pillar = {}
+    for measure in measures_with_analyses:
+        if measure.pillar_id not in by_pillar:
+            by_pillar[measure.pillar_id] = []
+        by_pillar[measure.pillar_id].append(measure)
+    
+    pillar_names = {
+        'CO': 'Cost Optimization',
+        'DG': 'Data & AI Governance', 
+        'RE': 'Reliability',
+        'SE': 'Security',
+        'PE': 'Performance Efficiency',
+        'OE': 'Operational Excellence',
+        'IU': 'Interoperability & Usability'
+    }
+    
+    for pillar_id, measures in sorted(by_pillar.items()):
+        pillar_name = pillar_names.get(pillar_id, pillar_id)
+        result += f"**{pillar_name} ({pillar_id}):**\n"
+        
+        for measure in sorted(measures, key=lambda m: m.measure_id):
+            analyses = waf_service.get_analyses_for_measure(measure.measure_id)
+            result += f"  - **{measure.measure_id}**: {measure.best_practice}\n"
+            result += f"    Analyses: "
+            result += ", ".join([f"`{a.analysis_id}`" for a in analyses])
+            result += "\n"
         result += "\n"
     
-    if len(matches) > 15:
-        result += f"... and {len(matches) - 15} more results.\n\n"
-    
-    result += "Use `get_waf_measure(measure_id)` for complete details on any measure."
+    result += f"Use **Get WAF Principle** to see measure details, then **Run WAF Analysis** to execute specific analyses."
     
     return result
-
-
-@mcp.tool()
-def COST_OPTIMISATION_C0_01_01_TABLE_TYPES() -> str:
-    """
-    CO-01-01 | Use Performance-Optimised Data Formats - Analyzes table formats in workspace to identify cost optimization opportunities
-    """
-    query = query_repo.get_query("CO-01-01-table-formats")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_table_formats)
-    
-    
-@mcp.tool()
-def COST_OPTIMISATION_C0_01_01_MANAGED_TABLES() -> str:
-    """
-    CO-01-01 | Use Performance-Optimised Data Formats - Analyzes table types in workspace to identify cost optimization opportunities from managed tables, showing the percentage distribution of table types across your data estate
-    """
-    query = query_repo.get_query("CO-01-01-managed-tables")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_table_types_distribution)   
-    
-@mcp.tool()
-def COST_OPTIMISATION_C0_01_02_JOBS_ON_ALL_PURPOSE_CLUSTERS() -> str:
-    """
-    CO-01-02 | Use Job Clusters for Non-Interactive Workloads - Analyse jobs running on all purpose clusters to identify cost optimization opportunities by switching to dedicated clusters compute
-    """
-    query = query_repo.get_query("CO-01-02")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_jobs_on_all_purpose_clusters) 
-    
-
-# @mcp.tool()
-# def COST_OPTIMISATION_CO_01_03_SQL_VS_ALLPURPOSE() -> str:
-#     """
-#     CO-01-03 | Use SQL Compute for SQL Workloads - Compares SQL vs All Purpose compute usage to identify cost optimization opportunities
-#     """
-#     query = query_repo.get_query("CO-01-03")
-#     return sql_service.execute_query_with_formatting(query, QueryFormatter.format_sql_vs_all_purpose)
-
-
-# @mcp.tool()
-# def COST_OPTIMISATION_CO_01_03_SQL_ON_ALLPURPOSE() -> str:
-#     """
-#     CO-01-03 | Use SQL Compute for SQL Workloads - Shows SQL workloads running on All Purpose clusters (Coming Soon)
-#     """
-#     return "Coming Soon... - SQL workloads running on All Purpose clusters analysis will be available in a future update"
-
-
-@mcp.tool()
-def COST_OPTIMISATION_CO_01_04_LATEST_DBR() -> str:
-    """
-    CO-01-04 | Use Latest Databricks Runtime - Analyzes DBR versions across clusters to identify upgrade opportunities
-    """
-    query = query_repo.get_query("CO-01-04")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_dbr_versions)
-
-
-# @mcp.tool()
-# def COST_OPTIMISATION_CO_01_05_GPU() -> str:
-#     """
-#     CO-01-05 | Optimize GPU Usage - Analyzes GPU usage patterns (Coming Soon)
-#     """
-#     return "Coming Soon... - GPU usage optimization analysis will be available in a future update"
-
-
-@mcp.tool()
-def COST_OPTIMISATION_CO_01_06_SERVERLESS() -> str:
-    """
-    CO-01-06 | Use Serverless Compute - Shows percentage of serverless compute usage vs total compute
-    """
-    query = query_repo.get_query("CO-01-06-serverless")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_serverless_percentage)
-
-
-@mcp.tool()
-def COST_OPTIMISATION_CO_01_06_SERVERLESS_SQL() -> str:
-    """
-    CO-01-06 | Use Serverless Compute - Compares SQL Serverless vs Classic SQL compute costs
-    """
-    query = query_repo.get_query("CO-01-06-sql")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_sql_compute_costs)
-
-
-# @mcp.tool()
-# def COST_OPTIMISATION_CO_01_07_INSTANCE_TYPE() -> str:
-#     """
-#     CO-01-07 | Optimize Instance Types - Analyzes instance type usage patterns (Coming Soon)
-#     """
-#     return "Coming Soon... - Instance type optimization analysis will be available in a future update"
-
-
-# @mcp.tool()
-# def COST_OPTIMISATION_CO_01_08_CLUSTER_SIZE() -> str:
-#     """
-#     CO-01-08 | Right-size Clusters - Analyzes cluster sizing patterns (Coming Soon)
-#     """
-#     return "Coming Soon... - Cluster sizing analysis will be available in a future update"
-
-
-@mcp.tool()
-def COST_OPTIMISATION_CO_01_08_CLUSTER_UTILISATION() -> str:
-    """
-    CO-01-08 | Right-size Clusters - Analyzes cluster utilization patterns to identify optimization opportunities
-    """
-    query = query_repo.get_query("CO-01-08")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_cluster_utilization)
-
-
-# @mcp.tool()
-# def COST_OPTIMISATION_CO_01_09_PHOTON() -> str:
-#     """
-#     CO-01-09 | Use Photon for SQL Workloads - Analyzes Photon usage patterns (Coming Soon)
-#     """
-#     return "Coming Soon... - Photon usage analysis will be available in a future update"
-
-
-@mcp.tool()
-def COST_OPTIMISATION_CO_02_01_AUTO_SCALING() -> str:
-    """
-    CO-02-01 | Enable Autoscaling - Shows percentage of clusters with autoscaling enabled
-    """
-    query = query_repo.get_query("CO-02-01")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_autoscaling_percentage)
-
-
-@mcp.tool()
-def COST_OPTIMISATION_CO_02_02_AUTO_TERMINATION() -> str:
-    """
-    CO-02-02 | Configure Auto-termination - Analyzes auto-termination settings across clusters
-    """
-    query = query_repo.get_query("CO-02-02")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_auto_termination_analysis)
-
-
-# @mcp.tool()
-# def COST_OPTIMISATION_CO_02_03_CLUSTER_POLICIES() -> str:
-#     """
-#     CO-02-03 | Use Cluster Policies - Analyzes cluster policy usage patterns (Coming Soon)
-#     """
-#     return "Coming Soon... - Cluster policy usage analysis will be available in a future update"
-
-
-@mcp.tool()
-def COST_OPTIMISATION_CO_03_01_BILLING_TABLES() -> str:
-    """
-    CO-03-01 | Monitor Billing Tables Usage - Shows how frequently billing tables are accessed
-    """
-    query = query_repo.get_query("CO-03-01")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_billing_table_access)
-
-
-@mcp.tool()
-def COST_OPTIMISATION_CO_03_02_TAGGING_COMPUTE() -> str:
-    """
-    CO-03-02 | Use Tags for Cost Allocation - Analyzes tagging patterns on compute resources
-    """
-    query = query_repo.get_query("CO-03-02-tagging")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_cluster_tagging_distribution)
-
-
-@mcp.tool()
-def COST_OPTIMISATION_CO_03_02_POPULAR_TAGS() -> str:
-    """
-    CO-03-02 | Use Tags for Cost Allocation - Shows most popular tags used across clusters
-    """
-    query = query_repo.get_query("CO-03-02-popular")
-    return sql_service.execute_query_with_formatting(query, QueryFormatter.format_popular_tags)
 
 
 mcp_app = mcp.streamable_http_app()

@@ -1,32 +1,8 @@
-pillar_id,pillar_name
-DG,01 - Data And AI Governance
-DG,01 - Data And AI Governance
-DG,01 - Data And AI Governance
-IU,02 - Interoperability and Usability
-IU,02 - Interoperability and Usability
-IU,02 - Interoperability and Usability
-IU,02 - Interoperability and Usability
-OE,03 - Operational Excellence
-OE,03 - Operational Excellence
-OE,03 - Operational Excellence
-OE,03 - Operational Excellence
-SC,"04 - Security, Compliance and Privacy"
-SC,"04 - Security, Compliance and Privacy"
-SC,"04 - Security, Compliance and Privacy"
-SC,"04 - Security, Compliance and Privacy"
-SC,"04 - Security, Compliance and Privacy"
-SC,"04 - Security, Compliance and Privacy"
-SC,"04 - Security, Compliance and Privacy"
-R,05 - Reliability
-R,05 - Reliability
-R,05 - Reliability
-R,05 - Reliability
-R,05 - Reliability
-PE,06 - Performance efficiency
-PE,06 - Performance efficiency
-PE,06 - Performance efficiency
-PE,06 - Performance efficiency
-CO,07 - Cost Optimization
-CO,07 - Cost Optimization
-CO,07 - Cost Optimization
-CO,07 - Cost Optimization
+pillar_id,pillar_name,pillar_description
+DG,01 - Data And AI Governance,"One of the fundamental aspects of a lakehouse is unified data governance: The lakehouse unifies data warehousing and AI use cases on a single platform. This simplifies the modern data stack by eliminating the data silos that traditionally separate and complicate data engineering, analytics, BI, data science, and machine learning."
+IU,02 - Interoperability and Usability,"An important goal of the lakehouse is to provide great usability for all personas working with it and to interact with a wide ecosystem of external systems. As an integrated platform, Databricks Lakehouse provides a consistent user experience across all workloads, improving the user experience. This reduces training and onboarding costs and improves cross-functional collaboration. In an interconnected world with cross-enterprise business processes, diverse systems need to work together as seamlessly as possible. The level of interoperability is critical, and the flow of data between internal and external partner systems must be not only secure but increasingly up to date."
+OE,03 - Operational Excellence,"Focuses on automation, monitoring, and continuous improvement. It covers CI/CD for jobs and notebooks, observability with system tables, alerting, logging, and incident response to maintain consistent delivery and uptime."
+SC,"04 - Security, Compliance and Privacy","Focuses on protecting data and workloads through features such as Unity Catalog, fine-grained access control, encryption, network isolation (e.g., PrivateLink, VPC injection), and audit logging. It also includes compliance with standards like ISO, SOC, and GDPR."
+R,05 - Reliability,"Ensures that your data and AI systems are resilient, fault-tolerant, and able to recover quickly from failures. It focuses on service availability, data durability, and end-to-end monitoring across pipelines, clusters, and jobs."
+PE,06 - Performance efficiency,"Ensures workloads run efficiently and scale automatically with demand. This includes optimising queries, using Photon execution, Z-Ordering, caching, and adaptive query execution to maximise speed and minimise cost."
+CO,07 - Cost Optimization,"Encourages efficient resource usage through cost-aware design—such as using Delta Tables for performance and storage efficiency, applying auto-scaling clusters, job scheduling, and leveraging serverless compute where appropriate."
